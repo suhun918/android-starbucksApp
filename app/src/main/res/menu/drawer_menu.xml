@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_camera"
+            android:title="Home"></item>
+        <item
+            android:id="@+id/nav_sirenOrder"
+            android:icon="@drawable/ic_gallery"
+            android:title="Siren Order"></item>
+        <item
+            android:id="@+id/nav_card"
+            android:icon="@drawable/ic_play"
+            android:title="Card"></item>
+        <item
+            android:id="@+id/nav_store"
+            android:icon="@drawable/ic_build"
+            android:title="Store"></item>
+        <item
+            android:id="@+id/nav_whatsNew"
+            android:icon="@drawable/ic_build"
+            android:title="What's New"></item>
+        <item
+            android:id="@+id/nav_menu"
+            android:icon="@drawable/ic_build"
+            android:title="전체메뉴"></item>
+    </group>
+</menu>
