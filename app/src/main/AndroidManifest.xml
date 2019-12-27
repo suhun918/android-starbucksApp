@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MenuActivity"></activity>
+        <activity android:name=".WhatsNewActivity" />
+        <activity android:name=".StoreActivity" />
+        <activity android:name=".SirenOrderActivity" />
+        <activity android:name=".CardActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
