@@ -8,4 +8,6 @@
     <color name="colorWelcome">#fac8b4</color>
     <color name="colorMainBackground">#181818</color>
     <color name="colorMainBackLine">#3c3c3c</color>
+    <color name="colorSirenOrderBackground">#EAE6E3</color>
+    <color name="colorSirenOrderBackLine">#888483</color>
 </resources>
