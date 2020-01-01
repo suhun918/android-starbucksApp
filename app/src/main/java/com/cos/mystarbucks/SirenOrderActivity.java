@@ -5,25 +5,75 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 public class SirenOrderActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageView menuIcon;
+    private TextView AllMenuIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_siren_order);
 
+        IconIntent();
+        recyclerView();
+        drawerLayout();
+        toolbarSetting();
+    }
+    private void IconIntent(){
+        AllMenuIcon = findViewById(R.id.tv_SirenAllMenu);
+        AllMenuIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
+                menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                menu.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(menu);
+            }
+        });
+    }
+
+    private void recyclerView(){
+        // 리사이클러뷰에 표시할 데이터 리스트 생성.
+        ArrayList<String> list = new ArrayList<>();
+        for (int i=0; i<100; i++) {
+            list.add(String.format("TEXT %d", i)) ;
+        }
+
+        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+        RecyclerView sirenMenu1 = findViewById(R.id.siren_menu1) ;
+        sirenMenu1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
+
+        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+        RecyclerAdapterSiren sirenAdapter1 = new RecyclerAdapterSiren(list) ;
+        sirenMenu1.setAdapter(sirenAdapter1) ;
+
+        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+        RecyclerView sirenMenu2 = findViewById(R.id.siren_menu2) ;
+        sirenMenu2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
+
+        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+        RecyclerAdapterSiren sirenAdapter2 = new RecyclerAdapterSiren(list) ;
+        sirenMenu2.setAdapter(sirenAdapter2) ;
+    }
+
+    private void drawerLayout(){
         toolbar = findViewById(R.id.toolbar);
         menuIcon = findViewById(R.id.menu_icon);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -83,7 +133,6 @@ public class SirenOrderActivity extends AppCompatActivity {
                 return true;
             }
         });
-        toolbarSetting();
     }
 
     private void toolbarSetting(){

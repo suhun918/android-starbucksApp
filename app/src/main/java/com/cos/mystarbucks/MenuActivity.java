@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +16,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -20,11 +26,45 @@ public class MenuActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private ImageView menuIcon;
 
+    private FragmentAdapterMenu adapter;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        fragmentViewPager();
+        drawerLayout();
+        toolbarSetting();
+    }
+
+    private void fragmentViewPager(){
+        viewPager = findViewById(R.id.vp_container);
+        tabLayout = findViewById(R.id.tabs);
+
+        adapter = new FragmentAdapterMenu(getSupportFragmentManager(),1);
+
+        adapter.addFragment(new FragmentCoffee());
+        adapter.addFragment(new FragmentBeverage());
+        adapter.addFragment(new FragmentFood());
+
+        // ViewPager와 Fragment 연결
+        viewPager.setAdapter(adapter);
+
+        // ViewPager와 TabLayout 연결
+        tabLayout.setupWithViewPager(viewPager); // 메뉴 3개 만들어짐
+
+        tabLayout.getTabAt(0).setText("원두");
+        tabLayout.getTabAt(1).setText("음료");
+        tabLayout.getTabAt(2).setText("음식");
+
+
+}
+
+     private void drawerLayout(){
         toolbar = findViewById(R.id.toolbar);
         menuIcon = findViewById(R.id.menu_icon);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -84,7 +124,6 @@ public class MenuActivity extends AppCompatActivity {
                 return true;
             }
         });
-        toolbarSetting();
     }
 
     private void toolbarSetting(){

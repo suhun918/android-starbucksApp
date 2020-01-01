@@ -15,62 +15,21 @@
         tools:context=".MenuActivity">
         <include layout="@layout/toolbar" />
 
-        <LinearLayout
+        <!-- TabLayout 추가 -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:layout_weight="5">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="10"
-                android:text="음료"
-                android:gravity="center">
+        </com.google.android.material.tabs.TabLayout>
 
-            </TextView>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="10"
-                android:text="푸드"
-                android:gravity="center">
-
-            </TextView>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="10"
-                android:text="상품"
-                android:gravity="center">
-
-            </TextView>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="10"
-                android:text="홀케이크 예약"
-                android:gravity="center">
-
-            </TextView>
-
-
-
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
+        <!-- ViewPager 추가 -->
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_container"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:background="@color/colorSirenOrderBackground">
+            android:layout_height="match_parent">
 
-        </androidx.recyclerview.widget.RecyclerView>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="90">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
+        </androidx.viewpager.widget.ViewPager>
 
 
     </LinearLayout>

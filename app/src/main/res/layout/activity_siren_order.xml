@@ -47,7 +47,7 @@
                 android:layout_marginBottom="10dp">
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/tv_SirenAllMenu"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10"
@@ -60,12 +60,12 @@
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
                     android:background="@color/colorSirenOrderBackLine"/>
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/tv_SirenMyMenu"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10"
@@ -78,12 +78,12 @@
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
                     android:background="@color/colorSirenOrderBackLine"/>
 
                 <TextView
-                    android:id="@+id/textView310"
+                    android:id="@+id/tv_SirenHistory"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10"
@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="30"
+            android:layout_weight="20"
             android:background="@color/colorSirenOrderBackground">
 
             <LinearLayout
@@ -120,6 +120,7 @@
                     android:layout_marginStart="10dp">
                 </TextView>
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/siren_menu1"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="30"
@@ -148,36 +149,11 @@
 
                 </TextView>
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/siren_menu2"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="30"
                     >
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:orientation="vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/colorWhite">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="10"
-                    android:text="이 시간대 인기 메뉴"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorBlack"
-                    android:layout_marginStart="10dp">
-                </TextView>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="30">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
