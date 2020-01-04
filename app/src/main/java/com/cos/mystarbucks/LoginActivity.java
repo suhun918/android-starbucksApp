@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,74 +19,34 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-
-public class SirenOrderActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageView menuIcon;
-    private TextView AllMenuIcon;
 
     private View header;
     private Button btnLogin;
 
+    private TextView loginTextView1, loginTextView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_siren_order);
+        setContentView(R.layout.activity_login);
 
-        IconIntent();
-        recyclerView();
+        setClickEventListener();
         drawerLayout();
         toolbarSetting();
 
     }
-    private void IconIntent(){
-        AllMenuIcon = findViewById(R.id.tv_SirenAllMenu);
-        AllMenuIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
-                menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                menu.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(menu);
-            }
-        });
-    }
 
-    private void recyclerView(){
-        // 리사이클러뷰에 표시할 데이터 리스트 생성.
-        ArrayList<String> list = new ArrayList<>();
-        for (int i=0; i<100; i++) {
-            list.add(String.format("TEXT %d", i)) ;
-        }
-
-        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        RecyclerView sirenMenu1 = findViewById(R.id.siren_menu1) ;
-        sirenMenu1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
-
-        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-        RecyclerAdapterSiren sirenAdapter1 = new RecyclerAdapterSiren(list) ;
-        sirenMenu1.setAdapter(sirenAdapter1) ;
-
-        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        RecyclerView sirenMenu2 = findViewById(R.id.siren_menu2) ;
-        sirenMenu2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
-
-        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-        RecyclerAdapterSiren sirenAdapter2 = new RecyclerAdapterSiren(list) ;
-        sirenMenu2.setAdapter(sirenAdapter2) ;
-    }
-
-    private void drawerLayout(){
+    private void drawerLayout() {
         toolbar = findViewById(R.id.toolbar);
         menuIcon = findViewById(R.id.menu_icon);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         header = navigationView.getHeaderView(0);
-
         btnLogin = header.findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,10 +58,11 @@ public class SirenOrderActivity extends AppCompatActivity {
             }
         });
 
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.nav_home:
                         Intent home = new Intent(getApplicationContext(), MainActivity.class);
                         //플래그. 간단히 현재 액티비티에서 어느 액티비티로 이동하는데, 스택 중간에 있었던 액티비티들을 지우는 역할은 한다고 이해하면 된다. 이 플래그가 없으면, 중간에 액티비티는 스택에 그대로 남아있기 때문에 이동 중간에  화면에 표출되어 UI 흐름을 망친다. 또한 시간이 지나면서 수 많은 액티비티가 쌓이게 되어 메모리 낭비를 초래한다.
@@ -157,6 +116,7 @@ public class SirenOrderActivity extends AppCompatActivity {
     }
 
     private void toolbarSetting(){
+
         setSupportActionBar(toolbar);
         menuIcon.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -164,8 +124,22 @@ public class SirenOrderActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-
     }
 
+    private  void setClickEventListener(){
+
+        loginTextView1 = findViewById(R.id.login_text_view1);
+        loginTextView2 = findViewById(R.id.login_text_view2);
+
+        SpannableString s1 = new SpannableString("안녕하세요.\n스타벅스입니다.");
+        SpannableString s2 = new SpannableString("회원서비스 이용을 위해 로그인 해주세요");
+        s1.setSpan(new ForegroundColorSpan(Color.BLACK), 0, s1.length(), 0);
+        s2.setSpan(new ForegroundColorSpan(Color.GRAY), 0, s2.length(), 0);
+
+        loginTextView1.setText(s1);
+        loginTextView2.setText(s2);
+
+
+    }
 
 }

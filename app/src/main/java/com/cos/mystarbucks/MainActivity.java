@@ -13,6 +13,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,12 +32,15 @@ public class MainActivity extends AppCompatActivity {
     private TextView mainWhatsNew;
     private TextView mainTextView;
 
+    private View header;
+    private Button btnLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setClickEventLitener();
+        setClickEventListener();
         drawerLayout();
         toolbarSetting();
     }
@@ -46,6 +50,19 @@ public class MainActivity extends AppCompatActivity {
         menuIcon = findViewById(R.id.menu_icon);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
+        header = navigationView.getHeaderView(0);
+
+        btnLogin = header.findViewById(R.id.btn_login);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                login.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(login);
+            }
+        });
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -101,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-    };
+    }
 
     private void toolbarSetting(){
         setSupportActionBar(toolbar);
@@ -113,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private  void setClickEventLitener(){
+    private  void setClickEventListener(){
         mainSirenOrder = findViewById(R.id.main_sirenOrder);
         mainCard = findViewById(R.id.main_card);
         mainStore = findViewById(R.id.tv_main_store);
