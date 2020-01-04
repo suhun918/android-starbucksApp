@@ -1,20 +1,21 @@
 package com.cos.mystarbucks;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.media.Image;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,11 +25,23 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private ImageView menuIcon;
 
+    private LinearLayout mainSirenOrder;
+    private LinearLayout mainCard;
+    private TextView mainStore;
+    private TextView mainWhatsNew;
+    private TextView mainTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setClickEventLitener();
+        drawerLayout();
+        toolbarSetting();
+    }
+
+    private void drawerLayout(){
         toolbar = findViewById(R.id.toolbar);
         menuIcon = findViewById(R.id.menu_icon);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -88,8 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        toolbarSetting();
-    }
+    };
 
     private void toolbarSetting(){
         setSupportActionBar(toolbar);
@@ -97,6 +109,61 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+    }
+
+    private  void setClickEventLitener(){
+        mainSirenOrder = findViewById(R.id.main_sirenOrder);
+        mainCard = findViewById(R.id.main_card);
+        mainStore = findViewById(R.id.tv_main_store);
+        mainWhatsNew = findViewById(R.id.tv_main_whatsNew);
+        mainTextView = findViewById(R.id.main_text_view);
+
+        SpannableString s = new SpannableString("마이 스타벅스 리워드 회원\n신규가입 첫 구매시,\n무료음료 혜택을 드려요!");
+
+        s.setSpan(new ForegroundColorSpan(Color.rgb(0,180,110)), 0, 14, 0);
+        s.setSpan(new ForegroundColorSpan(Color.WHITE), 14, s.length(), 0);
+
+        mainTextView.setText(s);
+
+        mainSirenOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent siren = new Intent(getApplicationContext(), SirenOrderActivity.class);
+                siren.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                siren.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(siren);
+            }
+        });
+
+        mainCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent siren = new Intent(getApplicationContext(), CardActivity.class);
+                siren.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                siren.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(siren);
+            }
+        });
+
+        mainStore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent siren = new Intent(getApplicationContext(), StoreActivity.class);
+                siren.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                siren.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(siren);
+            }
+        });
+
+        mainWhatsNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent siren = new Intent(getApplicationContext(), WhatsNewActivity.class);
+                siren.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                siren.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(siren);
             }
         });
     }
