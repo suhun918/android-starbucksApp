@@ -8,20 +8,28 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import android.content.Intent;
-import android.graphics.Color;
+
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.cos.mystarbucks.Adapter.RvAdapterSirenBeverage;
+import com.cos.mystarbucks.Adapter.RvAdapterSirenCoffee;
+import com.cos.mystarbucks.model.Siren;
+import com.cos.mystarbucks.service.SirenService;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SirenOrderActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -29,6 +37,8 @@ public class SirenOrderActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private ImageView menuIcon;
     private TextView AllMenuIcon;
+    private RecyclerView cRecyclerView, bRecyclerView;
+    private RecyclerView.LayoutManager clayoutManager, blayoutManager;
 
     private View header;
     private Button btnLogin;
@@ -41,6 +51,7 @@ public class SirenOrderActivity extends AppCompatActivity {
 
         IconIntent();
         recyclerView();
+        rvDataSetting();
         drawerLayout();
         toolbarSetting();
 
@@ -58,29 +69,42 @@ public class SirenOrderActivity extends AppCompatActivity {
         });
     }
 
+
     private void recyclerView(){
-        // 리사이클러뷰에 표시할 데이터 리스트 생성.
-        ArrayList<String> list = new ArrayList<>();
-        for (int i=0; i<100; i++) {
-            list.add(String.format("TEXT %d", i)) ;
-        }
+        clayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        cRecyclerView = findViewById(R.id.siren_menu1);
+        cRecyclerView.setHasFixedSize(true);
+        cRecyclerView.setLayoutManager(clayoutManager);
 
-        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        RecyclerView sirenMenu1 = findViewById(R.id.siren_menu1) ;
-        sirenMenu1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
-
-        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-        RecyclerAdapterSiren sirenAdapter1 = new RecyclerAdapterSiren(list) ;
-        sirenMenu1.setAdapter(sirenAdapter1) ;
-
-        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        RecyclerView sirenMenu2 = findViewById(R.id.siren_menu2) ;
-        sirenMenu2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)) ;
-
-        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-        RecyclerAdapterSiren sirenAdapter2 = new RecyclerAdapterSiren(list) ;
-        sirenMenu2.setAdapter(sirenAdapter2) ;
+        blayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        bRecyclerView = findViewById(R.id.siren_menu2);
+        bRecyclerView.setHasFixedSize(true);
+        bRecyclerView.setLayoutManager(blayoutManager);
     }
+
+    private void rvDataSetting(){
+        final RvAdapterSirenCoffee cAdapter = new RvAdapterSirenCoffee();
+        final RvAdapterSirenBeverage bAdapter = new RvAdapterSirenBeverage();
+
+        final SirenService sirenService = SirenService.retrofit.create(SirenService.class);
+        Call<Siren> call = sirenService.repoContributors();
+        call.enqueue(new Callback<Siren>() {
+            @Override
+            public void onResponse(Call<Siren> call,
+                                   Response<Siren> response) {
+
+                Siren siren = response.body();
+                cAdapter.addItems(siren.getCoffees());
+                bAdapter.addItems(siren.getBeverages());
+                cRecyclerView.setAdapter(cAdapter);
+                bRecyclerView.setAdapter(bAdapter);
+            }
+            @Override
+            public void onFailure(Call<Siren> call, Throwable t) {
+            }
+        });
+    }
+
 
     private void drawerLayout(){
         toolbar = findViewById(R.id.toolbar);

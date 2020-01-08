@@ -113,8 +113,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="10"
-                    android:text="새로 나온 메뉴"
+                    android:layout_weight="20"
+                    android:text="원두"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorBlack"
                     android:layout_marginStart="10dp">
@@ -141,8 +141,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="10"
-                    android:text="하루가 달콤해지는 디저트"
+                    android:layout_weight="20"
+                    android:text="음료"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorBlack"
                     android:layout_marginStart="10dp">
