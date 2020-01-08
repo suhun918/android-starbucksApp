@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cos.mystarbucks.R;
 import com.cos.mystarbucks.model.Siren;
+import com.cos.mystarbucks.util.Localhost;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class RvAdapterSirenCoffee extends RecyclerView.Adapter<RvAdapterSirenCof
         public void setItem(Siren.Coffee coffees){
             tvCoffee.setText(coffees.getName());
             Picasso.get()
-                   .load("http://192.168.0.50:8080"+coffees.getImage())
+                   .load(Localhost.URL + coffees.getImage())
                    .into(ivCoffee);
         }
     }

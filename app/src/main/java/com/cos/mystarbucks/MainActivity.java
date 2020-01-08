@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cos.mystarbucks.model.User;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setClickEventListener();
         drawerLayout();
         toolbarSetting();
+        setClickEventListener();
     }
 
     private void drawerLayout(){
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(login);
             }
         });
-
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -183,6 +183,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(siren);
             }
         });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        User u = User.getInstance();
+        if(u.getId() != 0){
+            btnLogin.setText("로그아웃");
+        }
     }
 
 }

@@ -23,65 +23,73 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/imageView4"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginStart="20dp"
             android:src="@drawable/loginpage_img"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.096"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.229" />
+            app:layout_constraintVertical_bias="0.2" />
 
         <TextView
             android:id="@+id/login_text_view1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.092"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/include"
-            app:layout_constraintVertical_bias="0.372" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/login_text_view2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.111"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_text_view1"
-            app:layout_constraintVertical_bias="0.049" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <EditText
             android:id="@+id/usernameInput"
-            android:layout_width="350dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:hint="아이디"
+            android:inputType="text"
             app:layout_constraintBottom_toTopOf="@+id/passwordInput"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.959" />
 
         <EditText
             android:id="@+id/passwordInput"
-            android:layout_width="350dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_below="@+id/usernameInput"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="28dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="76dp"
             android:hint="비밀번호"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf="@+id/btn_login_active"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
