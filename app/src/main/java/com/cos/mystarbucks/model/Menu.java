@@ -4,9 +4,8 @@ import java.util.List;
 
 import lombok.Data;
 
-
 @Data
-public class Siren{
+public class Menu {
     private List<Coffee> coffees;
     private List<Beverage> beverages;
 
@@ -32,5 +31,5 @@ public class Siren{
         private String category;
     }
 
-}
 
+}

@@ -12,11 +12,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.tabs.TabLayout;
+import com.cos.mystarbucks.Adapter.RvAdapterMenuCoffee;
+import com.cos.mystarbucks.model.Menu;
+import com.cos.mystarbucks.service.MenuService;
 
-import java.util.ArrayList;
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FragmentCoffee extends Fragment {
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
 
     // 내가 실행하는게 아님!!
     // fragment_first.xml 을 메모리에 로딩하고 Activity에 붙여서 return 하면 됨.
@@ -26,22 +34,35 @@ public class FragmentCoffee extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_coffee, container, false);
-
-        ArrayList<String> list = new ArrayList<>();
-        for (int i=0; i<100; i++) {
-            list.add(String.format("TEXT %d", i)) ;
-        }
-
         Context context = v.getContext();
+        layoutManager = new LinearLayoutManager(context);
+        recyclerView = v.findViewById(R.id.menu_coffee);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
 
-        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        RecyclerView menuCoffee = v.findViewById(R.id.menu_coffee) ;
-        menuCoffee.setLayoutManager(new LinearLayoutManager(context)) ;
+        rvDataSetting();
 
-        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-        RecyclerAdapterMenu menuAdapterCoffee = new RecyclerAdapterMenu(list) ;
-        menuCoffee.setAdapter(menuAdapterCoffee) ;
         return v;
+    }
+
+
+    private void rvDataSetting(){
+        final RvAdapterMenuCoffee Adapter = new RvAdapterMenuCoffee();
+
+        final MenuService menuService = MenuService.retrofit.create(MenuService.class);
+        Call<Menu> call = menuService.repoContributors();
+        call.enqueue(new Callback<Menu>() {
+            @Override
+            public void onResponse(Call<Menu> call,
+                                   Response<Menu> response) {
+                Menu menu = response.body();
+                Adapter.addItems(menu.getCoffees());
+                recyclerView.setAdapter(Adapter);
+            }
+            @Override
+            public void onFailure(Call<Menu> call, Throwable t) {
+            }
+        });
     }
 
 }
