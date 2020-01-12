@@ -15,6 +15,8 @@ public class User {
     private String level;
     private String createDate;
 
+    private String cookie;
+
     private static User u = null;
 
     private User(){

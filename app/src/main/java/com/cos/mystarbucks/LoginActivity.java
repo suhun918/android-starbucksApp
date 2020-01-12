@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cos.mystarbucks.model.User;
+import com.cos.mystarbucks.service.LoginService;
 import com.cos.mystarbucks.util.Localhost;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -30,6 +31,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -79,8 +86,55 @@ public class LoginActivity extends AppCompatActivity {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HttpAsyncTask hat = new HttpAsyncTask();
-                hat.execute();
+                Map map = new HashMap();
+                map.put("username", et1.getText().toString());
+                map.put("password", et2.getText().toString());
+
+                final LoginService loginService = LoginService.retrofit.create(LoginService.class);
+                Call<User> call = loginService.getUserInfo(map);
+                call.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call,
+                                           Response<User> response) {
+
+                        User u  = response.body();
+                        User user = User.getInstance();
+
+                        user.setId(u.getId());
+                        user.setUsername(u.getUsername());
+                        user.setName(u.getName());
+                        user.setEmail(u.getEmail());
+                        user.setLevel(u.getLevel());
+                        user.setProvider(u.getProvider());
+                        user.setProviderId(u.getProviderId());
+                        user.setCreateDate(u.getCreateDate());
+
+                        String setCookie = response.headers().get("Set-Cookie");
+                        String[] cookie = setCookie.split(";");
+                        user.setCookie(cookie[0]);
+
+                        Intent home = new Intent(getApplicationContext(), MainActivity.class);
+                        home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        home.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(home);
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        alertBuilder
+                                .setMessage("로그인 정보가 일치하지 않습니다.\n아이디나 비밀번호를 확인 후 다시 입력해 주세요.")
+                                .setCancelable(false) // alert 창 바깥을 터치하거나 뒤로가기 하면 alert 창 사라지는 옵션 (default : true)
+                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                    }
+                                });
+                        AlertDialog dialog = alertBuilder.create();
+                        dialog.show();
+                    }
+                });
             }
         });
     }
@@ -168,105 +222,6 @@ public class LoginActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-    }
-
-
-    private class HttpAsyncTask extends AsyncTask<Void, Void, String> {
-
-        String data = null;
-        String body = null;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            body = "username=" + et1.getText() + "&password=" + et2.getText();
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            try {
-                URL url = new URL(Localhost.URL + "/user/loginProc");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                // conn 설정
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestProperty("User-Agent", "Android"); // 헤더에 User Agent추가
-
-                // InputStream으로 서버로 부터 응답을 받겠다는 옵션
-                conn.setDoInput(true);
-                // OutputStream으로 POST 데이터를 넘겨주겠다는 옵션
-                conn.setDoOutput(true);
-
-                //conn.connect();
-
-                //post 요청 body에 데이터 담기
-                OutputStream outs = conn.getOutputStream();
-                outs.write(body.getBytes("UTF-8"));
-                outs.flush();
-                outs.close();
-                // 연결 요청 확인
-                // 실패 시 null을 리턴하고 메서드를 종료
-                if (conn.getResponseCode() != HttpURLConnection.HTTP_OK)
-                    return null;
-                // response를 BufferedReader로 받는다
-                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-
-                String line;
-                StringBuffer buff = new StringBuffer();
-
-                while ((line = reader.readLine()) != null){
-                    buff.append(line);
-                }
-
-                data = buff.toString();
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-            return data;
-        }
-
-
-        @Override
-        protected void onPostExecute(String data) {
-            super.onPostExecute(data);
-
-            if(data.equals("loginfail") || data == null){ //로그인 실패
-                alertBuilder
-                        .setMessage("로그인 정보가 일치하지 않습니다.\n아이디나 비밀번호를 확인 후 다시 입력해 주세요.")
-                        .setCancelable(false) // alert 창 바깥을 터치하거나 뒤로가기 하면 alert 창 사라지는 옵션 (default : true)
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-
-                            }
-                        });
-                AlertDialog dialog = alertBuilder.create();
-                dialog.show();
-
-            }else{ //로그인 성공
-                Gson gson = new Gson();
-                User user = User.getInstance();
-                User u = gson.fromJson(data, User.class);
-
-                user.setId(u.getId());
-                user.setUsername(u.getUsername());
-                user.setName(u.getName());
-                user.setEmail(u.getEmail());
-                user.setLevel(u.getLevel());
-                user.setProvider(u.getProvider());
-                user.setProviderId(u.getProviderId());
-                user.setCreateDate(u.getCreateDate());
-
-                Intent home = new Intent(getApplicationContext(), MainActivity.class);
-                home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                home.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(home);
-                finish();
-            }
-        }
     }
 
 }

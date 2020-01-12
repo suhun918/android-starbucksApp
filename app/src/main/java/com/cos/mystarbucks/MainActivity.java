@@ -57,10 +57,20 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-                login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                login.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(login);
+                if(btnLogin.getText().equals("로그인")){
+                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                    login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    login.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(login);
+                }else{
+                    User user = User.getInstance();
+                    user.setId(0);
+                    user.setCookie(null);
+
+                    TextView tv = header.findViewById(R.id.tv_name);
+                    btnLogin.setText("로그인");
+                    tv.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -189,10 +199,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        User u = User.getInstance();
-        if(u.getId() != 0){
+        User user = User.getInstance();
+        TextView tv = header.findViewById(R.id.tv_name);
+        if(user.getId() != 0){
             btnLogin.setText("로그아웃");
+            tv.setText(user.getName());
+            tv.setVisibility(View.VISIBLE);
+        }else{
+            btnLogin.setText("로그인");
+            tv.setVisibility(View.GONE);
         }
+
     }
 
 }
