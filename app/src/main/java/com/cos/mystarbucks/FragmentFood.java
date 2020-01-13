@@ -1,5 +1,6 @@
 package com.cos.mystarbucks;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import retrofit2.Response;
 public class FragmentFood extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private Activity actMenu;
     // 내가 실행하는게 아님!!
     // fragment_first.xml 을 메모리에 로딩하고 Activity에 붙여서 return 하면 됨.
     @Nullable
@@ -46,10 +48,13 @@ public class FragmentFood extends Fragment {
 
         return v;
     }
+    public FragmentFood(Activity actMenu) {
+        this.actMenu = actMenu;
+    }
 
 
     private void rvDataSetting(){
-        final RvAdapterMenuFood Adapter = new RvAdapterMenuFood();
+        final RvAdapterMenuFood Adapter = new RvAdapterMenuFood(actMenu);
 
         final MenuService menuService = MenuService.retrofit.create(MenuService.class);
         Call<Menu> call = menuService.repoContributors();

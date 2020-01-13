@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorloginActiveButton</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
 </resources>

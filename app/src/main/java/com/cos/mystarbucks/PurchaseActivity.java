@@ -5,109 +5,51 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 
 import android.content.Intent;
-
 import android.os.Bundle;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import com.cos.mystarbucks.Adapter.RvAdapterSirenBeverage;
-import com.cos.mystarbucks.Adapter.RvAdapterSirenCoffee;
-import com.cos.mystarbucks.model.Siren;
-import com.cos.mystarbucks.service.SirenService;
 import com.google.android.material.navigation.NavigationView;
 
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class SirenOrderActivity extends AppCompatActivity {
+public class PurchaseActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ImageView menuIcon;
-    private TextView AllMenuIcon;
-    private RecyclerView cRecyclerView, bRecyclerView;
-    private RecyclerView.LayoutManager clayoutManager, blayoutManager;
-
     private View header;
     private Button btnLogin;
-
-
+    private TextView name, price, img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_siren_order);
+        setContentView(R.layout.activity_purchase);
 
-        IconIntent();
-        recyclerView();
-        rvDataSetting();
         drawerLayout();
         toolbarSetting();
-
-    }
-    private void IconIntent(){
-        AllMenuIcon = findViewById(R.id.tv_SirenAllMenu);
-        AllMenuIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
-                menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                menu.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(menu);
-            }
-        });
+        receiveData();
     }
 
+    private void receiveData(){
+        name = findViewById(R.id.tv_name);
+        price = findViewById(R.id.tv_price);
+        img = findViewById(R.id.tvimg);
 
-    private void recyclerView(){
-        clayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        cRecyclerView = findViewById(R.id.siren_menu1);
-        cRecyclerView.setHasFixedSize(true);
-        cRecyclerView.setLayoutManager(clayoutManager);
+        Intent intent = getIntent();
 
-        blayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        bRecyclerView = findViewById(R.id.siren_menu2);
-        bRecyclerView.setHasFixedSize(true);
-        bRecyclerView.setLayoutManager(blayoutManager);
+        String cName = intent.getExtras().getString("name");
+        name.setText(cName);
+
+        int cPrice = intent.getExtras().getInt("price");
+        price.setText(String.valueOf(cPrice));
+
+        String cImg = intent.getExtras().getString("img");
+        img.setText(cImg);
     }
-
-    private void rvDataSetting(){
-        final RvAdapterSirenCoffee cAdapter = new RvAdapterSirenCoffee(this);
-        final RvAdapterSirenBeverage bAdapter = new RvAdapterSirenBeverage(this);
-
-        final SirenService sirenService = SirenService.retrofit.create(SirenService.class);
-        Call<Siren> call = sirenService.repoContributors();
-        call.enqueue(new Callback<Siren>() {
-            @Override
-            public void onResponse(Call<Siren> call,
-                                   Response<Siren> response) {
-
-                final Siren siren = response.body();
-                cAdapter.addItems(siren.getCoffees());
-                bAdapter.addItems(siren.getBeverages());
-                cRecyclerView.setAdapter(cAdapter);
-                bRecyclerView.setAdapter(bAdapter);
-
-            }
-            @Override
-            public void onFailure(Call<Siren> call, Throwable t) {
-            }
-        });
-
-    }
-
 
     private void drawerLayout(){
         toolbar = findViewById(R.id.toolbar);
@@ -193,6 +135,4 @@ public class SirenOrderActivity extends AppCompatActivity {
         });
 
     }
-
-
 }

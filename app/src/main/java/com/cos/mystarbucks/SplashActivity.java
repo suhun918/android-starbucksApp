@@ -2,18 +2,21 @@ package com.cos.mystarbucks;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.os.Handler;
 
-public class WhatsNewActivity extends AppCompatActivity {
-
+public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_whats_new);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
 
 
     }
+
 }

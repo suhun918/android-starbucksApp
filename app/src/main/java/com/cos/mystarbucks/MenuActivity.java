@@ -51,9 +51,9 @@ public class MenuActivity extends AppCompatActivity {
 
         adapter = new FragmentAdapterMenu(getSupportFragmentManager(),1);
 
-        adapter.addFragment(new FragmentCoffee());
-        adapter.addFragment(new FragmentBeverage());
-        adapter.addFragment(new FragmentFood());
+        adapter.addFragment(new FragmentCoffee(this));
+        adapter.addFragment(new FragmentBeverage(this));
+        adapter.addFragment(new FragmentFood(this));
 
         // ViewPager와 Fragment 연결
         viewPager.setAdapter(adapter);
