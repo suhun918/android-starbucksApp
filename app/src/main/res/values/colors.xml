@@ -11,4 +11,8 @@
 <color name="colorSirenOrderBackground">#EAE6E3</color>
 <color name="colorSirenOrderBackLine">#888483</color>
 <color name="colorloginActiveButton">#00AF66</color>
+<color name="colorPurchasePlusMinusBtn">#D7D2CC</color>
+<color name="colorPurchasePlusMinusTxt">#7B6E65</color>
+<color name="colorPurchaseBtn">#7B6D64</color>
+
 </resources>

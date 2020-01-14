@@ -16,7 +16,6 @@
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_weight="20">
-
         </ImageView>
 
         <LinearLayout
