@@ -113,8 +113,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="20"
-                    android:text="원두"
+                    android:layout_weight="10"
+                    android:text="Beverage"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorBlack"
                     android:layout_marginStart="10dp">
@@ -123,7 +123,7 @@
                     android:id="@+id/siren_menu1"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="30"
+                    android:layout_weight="20"
                     >
 
 
@@ -141,8 +141,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="20"
-                    android:text="음료"
+                    android:layout_weight="10"
+                    android:text="Food"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorBlack"
                     android:layout_marginStart="10dp">
@@ -152,7 +152,7 @@
                     android:id="@+id/siren_menu2"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="30"
+                    android:layout_weight="20"
                     >
 
                 </androidx.recyclerview.widget.RecyclerView>

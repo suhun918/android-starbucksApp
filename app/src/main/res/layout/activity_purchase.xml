@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".MenuActivity">
-        <include layout="@layout/toolbar_purchase" />
+        <include layout="@layout/toolbar_back" />
     </LinearLayout>
 
     <LinearLayout

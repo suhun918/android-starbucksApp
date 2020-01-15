@@ -18,6 +18,7 @@ import com.cos.mystarbucks.R;
 import com.cos.mystarbucks.model.Menu;
 
 import com.cos.mystarbucks.util.Localhost;
+import com.cos.mystarbucks.util.RoundedTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -66,7 +67,6 @@ public class RvAdapterMenuCoffee extends RecyclerView.Adapter<RvAdapterMenuCoffe
 
         }
         public void setItem(Menu.Coffee coffees){
-
             tvCoffeeName.setText(coffees.getName());
             tvCoffeePrice.setText(coffees.getPrice()+" 원");
             Picasso.get()

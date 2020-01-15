@@ -15,6 +15,7 @@ import com.cos.mystarbucks.PurchaseActivity;
 import com.cos.mystarbucks.R;
 import com.cos.mystarbucks.model.Siren;
 import com.cos.mystarbucks.util.Localhost;
+import com.cos.mystarbucks.util.RoundedTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,10 +59,11 @@ public class RvAdapterSirenBeverage extends RecyclerView.Adapter<RvAdapterSirenB
 
         }
         public void setItem(Siren.Beverage beverages){
-
+            RoundedTransform transform = new RoundedTransform(100,0);
             tvBeverage.setText(beverages.getName());
             Picasso.get()
                     .load(Localhost.URL + beverages.getImage())
+                    .transform(transform)
                     .into(ivBeverage);
         }
     }

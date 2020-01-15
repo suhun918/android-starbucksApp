@@ -8,6 +8,7 @@ import lombok.Data;
 public class Menu {
     private List<Coffee> coffees;
     private List<Beverage> beverages;
+    private List<Food> foods;
 
     @Data
     public class Coffee{
@@ -24,6 +25,15 @@ public class Menu {
 
     @Data
     public class Beverage{
+        private int id;
+        private String name;
+        private String image;
+        private int price;
+        private String category;
+    }
+
+    @Data
+    public class Food{
         private int id;
         private String name;
         private String image;

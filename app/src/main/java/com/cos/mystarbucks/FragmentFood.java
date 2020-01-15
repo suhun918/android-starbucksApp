@@ -63,7 +63,7 @@ public class FragmentFood extends Fragment {
             public void onResponse(Call<Menu> call,
                                    Response<Menu> response) {
                 Menu menu = response.body();
-                Adapter.addItems(menu.getBeverages());
+                Adapter.addItems(menu.getFoods());
                 recyclerView.setAdapter(Adapter);
             }
             @Override

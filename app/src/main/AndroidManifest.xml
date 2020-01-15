@@ -3,6 +3,7 @@
     package="com.cos.mystarbucks">
     <!-- 네트워크 사용에 대한 퍼미션 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -12,9 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".JoinActivity"></activity>
-        <activity
-            android:name=".SplashActivity"
+
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="eac0374d60a10556ed2e47b5c13aec54"/>
+
+        <activity android:name=".SplashActivity"
+
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +33,7 @@
         <activity android:name=".SirenOrderActivity" />
         <activity android:name=".CardActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".JoinActivity" />
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.util.Localhost;
 import com.cos.mystarbucks.util.NavigationFactory;
+import com.cos.mystarbucks.util.RoundedTransform;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
@@ -39,18 +40,19 @@ public class PurchaseActivity extends AppCompatActivity {
     }
 
     private void minit(){
-        toolbar = findViewById(R.id.toolbarPurchase);
+        toolbar = findViewById(R.id.toolbarBack);
         btnCart = findViewById(R.id.btn_cart);
         btnOrder = findViewById(R.id.btn_order);
-
-
     }
 
     private void toolbarSetting(){
+        TextView tv = toolbar.findViewById(R.id.tv_toolbarName);
+        tv.setText("메뉴 상세");
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);//검정화살표가 나오길래 내가 집어넣는 하얀 화살표
-        }
+    }
 
     //툴바버튼 클릭 이벤트
     @Override
@@ -77,9 +79,11 @@ public class PurchaseActivity extends AppCompatActivity {
         price = intent.getExtras().getInt("price");
         tvPrice.setText(price+"원");
 
+        RoundedTransform transform = new RoundedTransform(100,0);
         img = intent.getExtras().getString("img");
         Picasso.get()
                 .load(img)
+                .transform(transform)
                 .into(ivImg);
     }
 

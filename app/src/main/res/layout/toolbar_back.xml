@@ -5,7 +5,7 @@
     android:layout_height="50dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBlack"
-    android:id="@+id/toolbarPurchase"
+    android:id="@+id/toolbarBack"
     app:contentInsetStart="0dp">
 
     <RelativeLayout
@@ -13,9 +13,9 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/tv_toolbarName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="메뉴 상세"
             android:textSize="20dp"
             android:textColor="@color/colorWhite"
             android:layout_alignParentLeft="true"

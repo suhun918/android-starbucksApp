@@ -8,6 +8,9 @@
     tools:context=".JoinActivity">
 
 
+    <include layout="@layout/toolbar_back"/>
+
+
     <TextView
         android:id="@+id/tv_username_password"
         android:layout_width="match_parent"

@@ -7,26 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cos.mystarbucks.PurchaseActivity;
 import com.cos.mystarbucks.R;
-import com.cos.mystarbucks.WhatsNewActivity;
 import com.cos.mystarbucks.model.Siren;
 import com.cos.mystarbucks.util.Localhost;
+import com.cos.mystarbucks.util.RoundedTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RvAdapterSirenCoffee extends RecyclerView.Adapter<RvAdapterSirenCoffee.ViewHolder> {
-    List<Siren.Coffee> coffees = new ArrayList<>();
+public class RvAdapterSirenFood extends RecyclerView.Adapter<RvAdapterSirenFood.ViewHolder> {
+    List<Siren.Food> foods = new ArrayList<>();
     Activity actSiren;
 
-    public RvAdapterSirenCoffee(Activity actSiren) {
+    public RvAdapterSirenFood(Activity actSiren) {
         this.actSiren = actSiren;
     }
 
@@ -42,9 +41,9 @@ public class RvAdapterSirenCoffee extends RecyclerView.Adapter<RvAdapterSirenCof
                 public void onClick(View v){
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
-                        String name = coffees.get(pos).getName();
-                        int price = coffees.get(pos).getPrice();
-                        String img = Localhost.URL+coffees.get(pos).getImage();
+                        String name = foods.get(pos).getName();
+                        int price = foods.get(pos).getPrice();
+                        String img = Localhost.URL+foods.get(pos).getImage();
                         Intent what = new Intent(actSiren, PurchaseActivity.class);
                         what.putExtra("name",name); /*송신*/
                         what.putExtra("price",price);
@@ -59,27 +58,29 @@ public class RvAdapterSirenCoffee extends RecyclerView.Adapter<RvAdapterSirenCof
             ivCoffee = itemView.findViewById(R.id.iv_siren);
 
         }
-        public void setItem(Siren.Coffee coffees){
-            tvCoffee.setText(coffees.getName());
+        public void setItem(Siren.Food foods){
+            RoundedTransform transform = new RoundedTransform(100,0);
+            tvCoffee.setText(foods.getName());
             Picasso.get()
-                   .load(Localhost.URL + coffees.getImage())
+                   .load(Localhost.URL + foods.getImage())
+                   .transform(transform)
                    .into(ivCoffee);
         }
     }
 
-    public void addItem(Siren.Coffee coffee){
-        coffees.add(coffee);
+    public void addItem(Siren.Food food){
+        foods.add(food);
 
     }
 
-    public void addItems(List<Siren.Coffee> coffee){
-        this.coffees = coffee;
+    public void addItems(List<Siren.Food> food){
+        this.foods = food;
     }
 
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
     @NonNull
     @Override
-    public RvAdapterSirenCoffee.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RvAdapterSirenFood.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View sirenItemView = inflater.inflate(R.layout.recyclerview_sirenitem, parent, false);
         return new ViewHolder(sirenItemView);
@@ -87,16 +88,16 @@ public class RvAdapterSirenCoffee extends RecyclerView.Adapter<RvAdapterSirenCof
 
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
-    public void onBindViewHolder(RvAdapterSirenCoffee.ViewHolder holder, int position) {
-        Siren.Coffee coffee = coffees.get(position);
-         holder.setItem(coffee);
+    public void onBindViewHolder(RvAdapterSirenFood.ViewHolder holder, int position) {
+        Siren.Food food = foods.get(position);
+         holder.setItem(food);
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.
     @Override
     public int getItemCount() {
 
-        return coffees.size();
+        return foods.size();
 
     }
 

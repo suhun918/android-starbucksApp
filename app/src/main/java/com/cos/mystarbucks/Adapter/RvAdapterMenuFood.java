@@ -16,13 +16,14 @@ import com.cos.mystarbucks.PurchaseActivity;
 import com.cos.mystarbucks.R;
 import com.cos.mystarbucks.model.Menu;
 import com.cos.mystarbucks.util.Localhost;
+import com.cos.mystarbucks.util.RoundedTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RvAdapterMenuFood extends RecyclerView.Adapter<RvAdapterMenuFood.ViewHolder>{
-    List<Menu.Beverage> beverages = new ArrayList<>();
+    List<Menu.Food> foods = new ArrayList<>();
     Activity actMenu;
 
     public RvAdapterMenuFood(Activity actMenu) {
@@ -43,9 +44,9 @@ public class RvAdapterMenuFood extends RecyclerView.Adapter<RvAdapterMenuFood.Vi
                 public void onClick(View v){
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
-                        String name = beverages.get(pos).getName();
-                        int price = beverages.get(pos).getPrice();
-                        String img = Localhost.URL+beverages.get(pos).getImage();
+                        String name = foods.get(pos).getName();
+                        int price = foods.get(pos).getPrice();
+                        String img = Localhost.URL+foods.get(pos).getImage();
                         Intent what = new Intent(actMenu, PurchaseActivity.class);
                         what.putExtra("name",name); /*송신*/
                         what.putExtra("price",price);
@@ -62,24 +63,23 @@ public class RvAdapterMenuFood extends RecyclerView.Adapter<RvAdapterMenuFood.Vi
             loMenuItem = itemView.findViewById(R.id.lo_menuItem);
 
         }
-        public void setItem(Menu.Beverage beverages){
-
-            tvBeverageName.setText(beverages.getName());
-            tvBeveragePrice.setText(beverages.getPrice()+" 원");
+        public void setItem(Menu.Food foods){
+            tvBeverageName.setText(foods.getName());
+            tvBeveragePrice.setText(foods.getPrice()+" 원");
             Picasso.get()
-                    .load(Localhost.URL + beverages.getImage())
+                    .load(Localhost.URL + foods.getImage())
                     .into(ivBeverage);
         }
     }
 
-    public void addItem(Menu.Beverage beverage){
+    public void addItem(Menu.Food food){
 
-        beverages.add(beverage);
+        foods.add(food);
     }
 
-    public void addItems(List<Menu.Beverage> beverage){
+    public void addItems(List<Menu.Food> food){
 
-        this.beverages = beverage;
+        this.foods = food;
     }
 
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
@@ -94,20 +94,20 @@ public class RvAdapterMenuFood extends RecyclerView.Adapter<RvAdapterMenuFood.Vi
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
     public void onBindViewHolder(RvAdapterMenuFood.ViewHolder holder, int position) {
-        Menu.Beverage beverage = beverages.get(position);
+        Menu.Food food = foods.get(position);
         if(position % 2 == 0){
             holder.loMenuItem.setBackgroundColor(0xFFF4F4F2);
         }else{
             holder.loMenuItem.setBackgroundColor(0xFFFFFFFF);
         }
-        holder.setItem(beverage);
+        holder.setItem(food);
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.
     @Override
     public int getItemCount() {
 
-        return beverages.size();
+        return foods.size();
 
     }
 }

@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cos.mystarbucks.Adapter.RvAdapterSirenBeverage;
-import com.cos.mystarbucks.Adapter.RvAdapterSirenCoffee;
+import com.cos.mystarbucks.Adapter.RvAdapterSirenFood;
 import com.cos.mystarbucks.model.Siren;
 import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.service.SirenService;
@@ -39,8 +39,8 @@ public class SirenOrderActivity extends AppCompatActivity {
     private Button btnLogin;
 
     private TextView AllMenuIcon;
-    private RecyclerView cRecyclerView, bRecyclerView;
-    private RecyclerView.LayoutManager clayoutManager, blayoutManager;
+    private RecyclerView fRecyclerView, bRecyclerView;
+    private RecyclerView.LayoutManager flayoutManager, blayoutManager;
 
 
     @Override
@@ -95,19 +95,19 @@ public class SirenOrderActivity extends AppCompatActivity {
 
 
     private void recyclerView(){
-        clayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        cRecyclerView = findViewById(R.id.siren_menu1);
-        cRecyclerView.setHasFixedSize(true);
-        cRecyclerView.setLayoutManager(clayoutManager);
-
         blayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        bRecyclerView = findViewById(R.id.siren_menu2);
+        bRecyclerView = findViewById(R.id.siren_menu1);
         bRecyclerView.setHasFixedSize(true);
         bRecyclerView.setLayoutManager(blayoutManager);
+
+        flayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        fRecyclerView = findViewById(R.id.siren_menu2);
+        fRecyclerView.setHasFixedSize(true);
+        fRecyclerView.setLayoutManager(flayoutManager);
     }
 
     private void rvDataSetting(){
-        final RvAdapterSirenCoffee cAdapter = new RvAdapterSirenCoffee(this);
+        final RvAdapterSirenFood fAdapter = new RvAdapterSirenFood(this);
         final RvAdapterSirenBeverage bAdapter = new RvAdapterSirenBeverage(this);
 
         final SirenService sirenService = SirenService.retrofit.create(SirenService.class);
@@ -118,9 +118,9 @@ public class SirenOrderActivity extends AppCompatActivity {
                                    Response<Siren> response) {
 
                 final Siren siren = response.body();
-                cAdapter.addItems(siren.getCoffees());
+                fAdapter.addItems(siren.getFoods());
                 bAdapter.addItems(siren.getBeverages());
-                cRecyclerView.setAdapter(cAdapter);
+                fRecyclerView.setAdapter(fAdapter);
                 bRecyclerView.setAdapter(bAdapter);
 
             }

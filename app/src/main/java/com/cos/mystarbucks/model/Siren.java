@@ -8,20 +8,16 @@ import lombok.Data;
 
 @Data
 public class Siren{
-    private List<Coffee> coffees;
+    private List<Food> foods;
     private List<Beverage> beverages;
 
     @Data
-    public class Coffee{
+    public class Food{
         private int id;
-        private String detail;
         private String name;
         private String image;
         private int price;
-        private String roast;
-        private String flavor;
-        private String feel;
-        private String strong;
+        private String category;
     }
 
     @Data
