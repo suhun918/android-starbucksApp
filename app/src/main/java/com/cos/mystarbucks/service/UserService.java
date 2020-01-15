@@ -16,16 +16,21 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
-public interface LoginService {
+public interface UserService {
     @Headers({
             "User-Agent: Android"
     })
     @FormUrlEncoded
     @POST("/user/loginProc")
-    Call<User> getUserInfo(@FieldMap Map<String, String> body);
+    Call<User> login(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("/android/joinProc")
+    Call<ResponseBody> join(@FieldMap Map<String, String> body);
 
     @GET("/test")
     Call<ResponseBody> test(@Header("Cookie") String cookie);
+
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Localhost.URL)

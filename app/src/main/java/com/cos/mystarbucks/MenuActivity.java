@@ -36,14 +36,13 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        minit();
-        NavigationFactory.setNavigation(getApplicationContext(), drawerLayout, navigationView, header, btnLogin);
+        navigationSetting();
         toolbarSetting();
 
         fragmentViewPager();
     }
 
-    private void minit(){
+    private void navigationSetting(){
         toolbar = findViewById(R.id.toolbar);
         menuIcon = findViewById(R.id.menu_icon);
 
@@ -52,6 +51,8 @@ public class MenuActivity extends AppCompatActivity {
 
         header = navigationView.getHeaderView(0);
         btnLogin = header.findViewById(R.id.btn_login);
+
+        NavigationFactory.setNavigation(getApplicationContext(), drawerLayout, navigationView, header, btnLogin);
     }
 
     private void toolbarSetting(){

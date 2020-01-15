@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cos.mystarbucks.model.User;
-import com.cos.mystarbucks.service.LoginService;
+import com.cos.mystarbucks.service.UserService;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -26,9 +26,9 @@ public class StoreActivity extends AppCompatActivity {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final LoginService loginService = LoginService.retrofit.create(LoginService.class);
+                final UserService userService = UserService.retrofit.create(UserService.class);
 
-                Call<ResponseBody> call = loginService.test(User.getInstance().getCookie());
+                Call<ResponseBody> call = userService.test(User.getInstance().getCookie());
 
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override

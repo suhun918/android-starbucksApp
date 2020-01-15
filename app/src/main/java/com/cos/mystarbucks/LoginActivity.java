@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cos.mystarbucks.model.User;
-import com.cos.mystarbucks.service.LoginService;
+import com.cos.mystarbucks.service.UserService;
 import com.cos.mystarbucks.util.NavigationFactory;
 import com.google.android.material.navigation.NavigationView;
 import java.util.HashMap;
@@ -38,8 +38,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
 
     private TextView loginTextView1, loginTextView2;
-    private EditText et1, et2;
-    private Button bt;
+    private EditText etUsername, etPassword;
+    private Button btnLoginAction;
+    private TextView tvJoin;
 
     private AlertDialog.Builder alertBuilder;
 
@@ -49,14 +50,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        minit();
-        NavigationFactory.setNavigation(getApplicationContext(), drawerLayout, navigationView, header, btnLogin);
+        navigationSetting();
         toolbarSetting();
 
         setClickEventListener();
     }
 
-    private void minit(){
+    private void navigationSetting(){
         toolbar = findViewById(R.id.toolbar);
         menuIcon = findViewById(R.id.menu_icon);
 
@@ -65,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
 
         header = navigationView.getHeaderView(0);
         btnLogin = header.findViewById(R.id.btn_login);
+
+        NavigationFactory.setNavigation(getApplicationContext(), drawerLayout, navigationView, header, btnLogin);
     }
 
     private void toolbarSetting(){
@@ -88,22 +90,32 @@ public class LoginActivity extends AppCompatActivity {
         loginTextView2.setText(s2);
         loginTextView2.setTextColor(Color.GRAY);
 
-        et1 = findViewById(R.id.usernameInput);
-        et2 = findViewById(R.id.passwordInput);
+        tvJoin = findViewById(R.id.tv_Login_Join);
+        tvJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
+        etUsername = findViewById(R.id.usernameInput);
+        etPassword = findViewById(R.id.passwordInput);
 
         alertBuilder = new AlertDialog.Builder(this);
 
-        bt = findViewById(R.id.btn_login_active);
-
-        bt.setOnClickListener(new View.OnClickListener() {
+        btnLoginAction = findViewById(R.id.btn_login_active);
+        btnLoginAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Map map = new HashMap();
-                map.put("username", et1.getText().toString());
-                map.put("password", et2.getText().toString());
+                map.put("username", etUsername.getText().toString());
+                map.put("password", etPassword.getText().toString());
 
-                final LoginService loginService = LoginService.retrofit.create(LoginService.class);
-                Call<User> call = loginService.getUserInfo(map);
+                final UserService userService = UserService.retrofit.create(UserService.class);
+                Call<User> call = userService.login(map);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call,

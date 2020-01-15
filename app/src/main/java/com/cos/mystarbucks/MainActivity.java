@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout mainCard;
     private TextView mainStore;
     private TextView mainWhatsNew;
+    private Button mainJoin;
     private TextView mainTextView;
 
     @Override
@@ -41,14 +42,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        minit();
-        NavigationFactory.setNavigation(getApplicationContext(), drawerLayout, navigationView, header, btnLogin);
+        navigationSetting();
         toolbarSetting();
 
         setClickEventListener();
     }
 
-    private void minit(){
+    private void navigationSetting(){
         toolbar = findViewById(R.id.toolbar);
         menuIcon = findViewById(R.id.menu_icon);
 
@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
         header = navigationView.getHeaderView(0);
         btnLogin = header.findViewById(R.id.btn_login);
+
+        NavigationFactory.setNavigation(getApplicationContext(), drawerLayout, navigationView, header, btnLogin);
     }
 
     private void toolbarSetting(){
@@ -75,10 +77,11 @@ public class MainActivity extends AppCompatActivity {
         mainCard = findViewById(R.id.main_card);
         mainStore = findViewById(R.id.tv_main_store);
         mainWhatsNew = findViewById(R.id.tv_main_whatsNew);
+        mainJoin = findViewById(R.id.btn_join);
+
         mainTextView = findViewById(R.id.main_text_view);
 
         SpannableString s = new SpannableString("마이 스타벅스 리워드 회원\n신규가입 첫 구매시,\n무료음료 혜택을 드려요!");
-
         s.setSpan(new ForegroundColorSpan(Color.rgb(0,180,110)), 0, 14, 0);
         s.setSpan(new ForegroundColorSpan(Color.WHITE), 14, s.length(), 0);
 
@@ -87,40 +90,50 @@ public class MainActivity extends AppCompatActivity {
         mainSirenOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent siren = new Intent(getApplicationContext(), SirenOrderActivity.class);
-                siren.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                siren.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(siren);
+                Intent intent = new Intent(getApplicationContext(), SirenOrderActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
             }
         });
 
         mainCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent siren = new Intent(getApplicationContext(), CardActivity.class);
-                siren.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                siren.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(siren);
+                Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
             }
         });
 
         mainStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent siren = new Intent(getApplicationContext(), StoreActivity.class);
-                siren.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                siren.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(siren);
+                Intent intent = new Intent(getApplicationContext(), StoreActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
             }
         });
 
         mainWhatsNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent siren = new Intent(getApplicationContext(), WhatsNewActivity.class);
-                siren.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                siren.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(siren);
+                Intent intent = new Intent(getApplicationContext(), WhatsNewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
+        mainJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
             }
         });
     }
