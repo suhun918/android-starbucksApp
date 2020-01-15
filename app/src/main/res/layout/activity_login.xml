@@ -156,7 +156,7 @@
             android:id="@+id/btn_login_active"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/login_active_button"
+            android:background="@color/colorloginActiveButton"
             android:text="로그인하기"
             android:textSize="15sp"
             android:textColor="@color/colorWhite"

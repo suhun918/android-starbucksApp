@@ -6,6 +6,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.service.UserService;
@@ -39,8 +41,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView loginTextView1, loginTextView2;
     private EditText etUsername, etPassword;
-    private Button btnLoginAction;
     private TextView tvJoin;
+    private Button btnLoginAction;
 
     private AlertDialog.Builder alertBuilder;
 
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         navigationSetting();
         toolbarSetting();
 
+        minit();
         setClickEventListener();
     }
 
@@ -79,18 +82,27 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private  void setClickEventListener(){
+    private void minit(){
         loginTextView1 = findViewById(R.id.login_text_view1);
         loginTextView2 = findViewById(R.id.login_text_view2);
 
+        etUsername = findViewById(R.id.usernameInput);
+        etPassword = findViewById(R.id.passwordInput);
+
+        tvJoin = findViewById(R.id.tv_Login_Join);
+        btnLoginAction = findViewById(R.id.btn_login_active);
+
+        alertBuilder = new AlertDialog.Builder(this);
+
+
         String s1 = "안녕하세요.\n스타벅스입니다.";
         String s2 = "회원서비스 이용을 위해 로그인 해주세요";
-
         loginTextView1.setText(s1);
         loginTextView2.setText(s2);
         loginTextView2.setTextColor(Color.GRAY);
+    }
 
-        tvJoin = findViewById(R.id.tv_Login_Join);
+    private  void setClickEventListener(){
         tvJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,64 +113,74 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        etUsername = findViewById(R.id.usernameInput);
-        etPassword = findViewById(R.id.passwordInput);
-
-        alertBuilder = new AlertDialog.Builder(this);
-
-        btnLoginAction = findViewById(R.id.btn_login_active);
         btnLoginAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map map = new HashMap();
-                map.put("username", etUsername.getText().toString());
-                map.put("password", etPassword.getText().toString());
 
-                final UserService userService = UserService.retrofit.create(UserService.class);
-                Call<User> call = userService.login(map);
-                call.enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call,
-                                           Response<User> response) {
+                if(etUsername.getText().toString().length()==0 || etPassword.getText().toString().length()==0){
+                    Toast myToast = Toast.makeText(getApplicationContext(),"아이디와 비밀번호를 입력해주세요", Toast.LENGTH_SHORT);
+                    myToast.show();
+                }else {
 
-                        User u  = response.body();
-                        User user = User.getInstance();
+                    Map map = new HashMap();
+                    map.put("username", etUsername.getText().toString());
+                    map.put("password", etPassword.getText().toString());
 
-                        user.setId(u.getId());
-                        user.setUsername(u.getUsername());
-                        user.setName(u.getName());
-                        user.setEmail(u.getEmail());
-                        user.setLevel(u.getLevel());
-                        user.setProvider(u.getProvider());
-                        user.setProviderId(u.getProviderId());
-                        user.setCreateDate(u.getCreateDate());
+                    // ProgressDialog 설정
+                    final ProgressDialog progressDialog;
+                    progressDialog = new ProgressDialog(LoginActivity.this);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.setMessage("로그인 중입니다.");
+                    progressDialog.setCancelable(false);
+                    // ProgressDialog 띄우기
+                    progressDialog.show();
 
-                        String setCookie = response.headers().get("Set-Cookie");
-                        String[] cookie = setCookie.split(";");
-                        user.setCookie(cookie[0]);
+                    final UserService userService = UserService.retrofit.create(UserService.class);
+                    Call<User> call = userService.login(map);
+                    call.enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call,
+                                               Response<User> response) {
+                            progressDialog.dismiss();
 
-                        Intent home = new Intent(getApplicationContext(), MainActivity.class);
-                        home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        home.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(home);
-                        finish();
-                    }
+                            User u  = response.body();
+                            User user = User.getInstance();
 
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        alertBuilder
-                                .setMessage("로그인 정보가 일치하지 않습니다.\n아이디나 비밀번호를 확인 후 다시 입력해 주세요.")
-                                .setCancelable(false) // alert 창 바깥을 터치하거나 뒤로가기 하면 alert 창 사라지는 옵션 (default : true)
-                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
+                            user.setId(u.getId());
+                            user.setUsername(u.getUsername());
+                            user.setName(u.getName());
+                            user.setEmail(u.getEmail());
+                            user.setLevel(u.getLevel());
+                            user.setProvider(u.getProvider());
+                            user.setProviderId(u.getProviderId());
+                            user.setCreateDate(u.getCreateDate());
 
-                                    }
-                                });
-                        AlertDialog dialog = alertBuilder.create();
-                        dialog.show();
-                    }
-                });
+                            String setCookie = response.headers().get("Set-Cookie");
+                            String[] cookie = setCookie.split(";");
+                            user.setCookie(cookie[0]);
+
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+                            progressDialog.dismiss();
+
+                            alertBuilder
+                                    .setMessage("로그인 정보가 일치하지 않습니다.\n아이디나 비밀번호를 확인 후 다시 입력해 주세요.")
+                                    .setCancelable(false) // alert 창 바깥을 터치하거나 뒤로가기 하면 alert 창 사라지는 옵션 (default : true)
+                                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id) {
+
+                                        }
+                                    });
+                            AlertDialog dialog = alertBuilder.create();
+                            dialog.show();
+                        }
+                    });
+
+                }
             }
         });
     }

@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -37,7 +39,9 @@ public class JoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join);
 
         toolbarSetting();
+
         minit();
+        setClickEventListener();
     }
 
     private void toolbarSetting(){
@@ -53,11 +57,10 @@ public class JoinActivity extends AppCompatActivity {
     //툴바버튼 클릭 이벤트
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){//여기서 버튼별로 인텐트도 가능
-            case android.R.id.home:{//toolbar의 back키를 눌렀을 때 동작
+        switch (item.getItemId()){
+            case android.R.id.home:{
                 finish();
                 return true;
-
             }
         }
         return super.onOptionsItemSelected(item);
@@ -73,6 +76,9 @@ public class JoinActivity extends AppCompatActivity {
         alertBuilder = new AlertDialog.Builder(this);
 
         btnJoin = findViewById(R.id.btn_join);
+    }
+
+    private void setClickEventListener(){
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,11 +91,20 @@ public class JoinActivity extends AppCompatActivity {
                     map.put("email", etEmail.getText().toString());
                     map.put("name", etName.getText().toString());
 
+                    final ProgressDialog progressDialog;
+                    progressDialog = new ProgressDialog(JoinActivity.this);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.setMessage("회원가입 중입니다.");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+
                     final UserService userService = UserService.retrofit.create(UserService.class);
                     Call<ResponseBody> call = userService.join(map);
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            progressDialog.dismiss();
+
                             String res = null;
                             try {
                                 res = response.body().string();
@@ -105,6 +120,10 @@ public class JoinActivity extends AppCompatActivity {
                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int id) {
+                                                Intent home = new Intent(getApplicationContext(), LoginActivity.class);
+                                                home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                home.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                startActivity(home);
                                                 finish();
                                             }
                                         });
@@ -118,6 +137,8 @@ public class JoinActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            progressDialog.dismiss();
+
                             Toast myToast = Toast.makeText(getApplicationContext(),"서버와 연결할 수 없습니다", Toast.LENGTH_SHORT);
                             myToast.show();
                         }

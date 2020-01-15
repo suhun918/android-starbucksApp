@@ -96,7 +96,7 @@
             android:id="@+id/btn_join"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/login_active_button"
+            android:background="@color/colorloginActiveButton"
             android:text="회원가입"
             android:textColor="@color/colorWhite"
             android:textSize="15sp" />

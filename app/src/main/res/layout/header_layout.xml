@@ -25,7 +25,7 @@
             android:layout_height="25dp"
             android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/login_button"
+            android:background="@drawable/btn_login"
             android:text="로그인"
             android:textColor="@color/colorBlack"
             android:textSize="12sp" />
