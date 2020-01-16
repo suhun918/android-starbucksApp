@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cos.mystarbucks.PurchaseActivity;
 import com.cos.mystarbucks.R;
-import com.cos.mystarbucks.model.Siren;
+import com.cos.mystarbucks.model.SirenDTO;
 import com.cos.mystarbucks.util.Localhost;
 import com.cos.mystarbucks.util.RoundedTransform;
 import com.squareup.picasso.Picasso;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RvAdapterSirenBeverage extends RecyclerView.Adapter<RvAdapterSirenBeverage.ViewHolder> {
-    List<Siren.Beverage> beverages = new ArrayList<>();
+    List<SirenDTO.Beverage> beverages = new ArrayList<>();
     Activity actBeverage;
 
     public RvAdapterSirenBeverage(Activity actBeverage) {
@@ -58,7 +58,7 @@ public class RvAdapterSirenBeverage extends RecyclerView.Adapter<RvAdapterSirenB
             ivBeverage = itemView.findViewById(R.id.iv_siren);
 
         }
-        public void setItem(Siren.Beverage beverages){
+        public void setItem(SirenDTO.Beverage beverages){
             RoundedTransform transform = new RoundedTransform(100,0);
             tvBeverage.setText(beverages.getName());
             Picasso.get()
@@ -68,12 +68,12 @@ public class RvAdapterSirenBeverage extends RecyclerView.Adapter<RvAdapterSirenB
         }
     }
 
-    public void addItem(Siren.Beverage beverage){
+    public void addItem(SirenDTO.Beverage beverage){
 
         beverages.add(beverage);
     }
 
-    public void addItems(List<Siren.Beverage> beverage){
+    public void addItems(List<SirenDTO.Beverage> beverage){
 
         this.beverages = beverage;
     }
@@ -90,7 +90,7 @@ public class RvAdapterSirenBeverage extends RecyclerView.Adapter<RvAdapterSirenB
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
     public void onBindViewHolder(RvAdapterSirenBeverage.ViewHolder holder, int position) {
-        Siren.Beverage beverage = beverages.get(position);
+        SirenDTO.Beverage beverage = beverages.get(position);
         holder.setItem(beverage);
     }
 

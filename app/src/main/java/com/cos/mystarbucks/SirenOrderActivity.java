@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.cos.mystarbucks.Adapter.RvAdapterSirenBeverage;
 import com.cos.mystarbucks.Adapter.RvAdapterSirenFood;
-import com.cos.mystarbucks.model.Siren;
+import com.cos.mystarbucks.model.SirenDTO;
 import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.service.SirenService;
 import com.cos.mystarbucks.util.NavigationFactory;
@@ -111,21 +111,21 @@ public class SirenOrderActivity extends AppCompatActivity {
         final RvAdapterSirenBeverage bAdapter = new RvAdapterSirenBeverage(this);
 
         final SirenService sirenService = SirenService.retrofit.create(SirenService.class);
-        Call<Siren> call = sirenService.repoContributors();
-        call.enqueue(new Callback<Siren>() {
+        Call<SirenDTO> call = sirenService.repoContributors();
+        call.enqueue(new Callback<SirenDTO>() {
             @Override
-            public void onResponse(Call<Siren> call,
-                                   Response<Siren> response) {
+            public void onResponse(Call<SirenDTO> call,
+                                   Response<SirenDTO> response) {
 
-                final Siren siren = response.body();
-                fAdapter.addItems(siren.getFoods());
-                bAdapter.addItems(siren.getBeverages());
+                final SirenDTO sirenDTO = response.body();
+                fAdapter.addItems(sirenDTO.getFoods());
+                bAdapter.addItems(sirenDTO.getBeverages());
                 fRecyclerView.setAdapter(fAdapter);
                 bRecyclerView.setAdapter(bAdapter);
 
             }
             @Override
-            public void onFailure(Call<Siren> call, Throwable t) {
+            public void onFailure(Call<SirenDTO> call, Throwable t) {
             }
         });
 

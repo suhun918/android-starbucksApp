@@ -14,16 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cos.mystarbucks.PurchaseActivity;
 import com.cos.mystarbucks.R;
-import com.cos.mystarbucks.model.Menu;
+import com.cos.mystarbucks.model.MenuDTO;
 import com.cos.mystarbucks.util.Localhost;
-import com.cos.mystarbucks.util.RoundedTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RvAdapterMenuFood extends RecyclerView.Adapter<RvAdapterMenuFood.ViewHolder>{
-    List<Menu.Food> foods = new ArrayList<>();
+    List<MenuDTO.Food> foods = new ArrayList<>();
     Activity actMenu;
 
     public RvAdapterMenuFood(Activity actMenu) {
@@ -63,7 +62,7 @@ public class RvAdapterMenuFood extends RecyclerView.Adapter<RvAdapterMenuFood.Vi
             loMenuItem = itemView.findViewById(R.id.lo_menuItem);
 
         }
-        public void setItem(Menu.Food foods){
+        public void setItem(MenuDTO.Food foods){
             tvBeverageName.setText(foods.getName());
             tvBeveragePrice.setText(foods.getPrice()+" 원");
             Picasso.get()
@@ -72,12 +71,12 @@ public class RvAdapterMenuFood extends RecyclerView.Adapter<RvAdapterMenuFood.Vi
         }
     }
 
-    public void addItem(Menu.Food food){
+    public void addItem(MenuDTO.Food food){
 
         foods.add(food);
     }
 
-    public void addItems(List<Menu.Food> food){
+    public void addItems(List<MenuDTO.Food> food){
 
         this.foods = food;
     }
@@ -94,7 +93,7 @@ public class RvAdapterMenuFood extends RecyclerView.Adapter<RvAdapterMenuFood.Vi
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
     public void onBindViewHolder(RvAdapterMenuFood.ViewHolder holder, int position) {
-        Menu.Food food = foods.get(position);
+        MenuDTO.Food food = foods.get(position);
         if(position % 2 == 0){
             holder.loMenuItem.setBackgroundColor(0xFFF4F4F2);
         }else{

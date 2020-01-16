@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cos.mystarbucks.PurchaseActivity;
 import com.cos.mystarbucks.R;
-import com.cos.mystarbucks.model.Siren;
+import com.cos.mystarbucks.model.SirenDTO;
 import com.cos.mystarbucks.util.Localhost;
 import com.cos.mystarbucks.util.RoundedTransform;
 import com.squareup.picasso.Picasso;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RvAdapterSirenFood extends RecyclerView.Adapter<RvAdapterSirenFood.ViewHolder> {
-    List<Siren.Food> foods = new ArrayList<>();
+    List<SirenDTO.Food> foods = new ArrayList<>();
     Activity actSiren;
 
     public RvAdapterSirenFood(Activity actSiren) {
@@ -58,7 +58,7 @@ public class RvAdapterSirenFood extends RecyclerView.Adapter<RvAdapterSirenFood.
             ivCoffee = itemView.findViewById(R.id.iv_siren);
 
         }
-        public void setItem(Siren.Food foods){
+        public void setItem(SirenDTO.Food foods){
             RoundedTransform transform = new RoundedTransform(100,0);
             tvCoffee.setText(foods.getName());
             Picasso.get()
@@ -68,12 +68,12 @@ public class RvAdapterSirenFood extends RecyclerView.Adapter<RvAdapterSirenFood.
         }
     }
 
-    public void addItem(Siren.Food food){
+    public void addItem(SirenDTO.Food food){
         foods.add(food);
 
     }
 
-    public void addItems(List<Siren.Food> food){
+    public void addItems(List<SirenDTO.Food> food){
         this.foods = food;
     }
 
@@ -89,7 +89,7 @@ public class RvAdapterSirenFood extends RecyclerView.Adapter<RvAdapterSirenFood.
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
     public void onBindViewHolder(RvAdapterSirenFood.ViewHolder holder, int position) {
-        Siren.Food food = foods.get(position);
+        SirenDTO.Food food = foods.get(position);
          holder.setItem(food);
     }
 

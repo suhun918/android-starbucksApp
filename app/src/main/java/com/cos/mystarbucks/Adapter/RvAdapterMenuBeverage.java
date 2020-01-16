@@ -14,9 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cos.mystarbucks.PurchaseActivity;
 import com.cos.mystarbucks.R;
-import com.cos.mystarbucks.model.Menu;
+import com.cos.mystarbucks.model.MenuDTO;
 import com.cos.mystarbucks.util.Localhost;
-import com.cos.mystarbucks.util.RoundedTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import java.util.List;
 
 public class RvAdapterMenuBeverage extends RecyclerView.Adapter<RvAdapterMenuBeverage.ViewHolder>{
 
-    List<Menu.Beverage> beverages = new ArrayList<>();
+    List<MenuDTO.Beverage> beverages = new ArrayList<>();
     Activity actMenu;
 
     public RvAdapterMenuBeverage(Activity actMenu) {
@@ -64,7 +63,7 @@ public class RvAdapterMenuBeverage extends RecyclerView.Adapter<RvAdapterMenuBev
             loMenuItem = itemView.findViewById(R.id.lo_menuItem);
 
         }
-        public void setItem(Menu.Beverage beverages){
+        public void setItem(MenuDTO.Beverage beverages){
             tvBeverageName.setText(beverages.getName());
             tvBeveragePrice.setText(beverages.getPrice()+" 원");
             Picasso.get()
@@ -73,12 +72,12 @@ public class RvAdapterMenuBeverage extends RecyclerView.Adapter<RvAdapterMenuBev
         }
     }
 
-    public void addItem(Menu.Beverage beverage){
+    public void addItem(MenuDTO.Beverage beverage){
 
         beverages.add(beverage);
     }
 
-    public void addItems(List<Menu.Beverage> beverage){
+    public void addItems(List<MenuDTO.Beverage> beverage){
 
         this.beverages = beverage;
     }
@@ -95,7 +94,7 @@ public class RvAdapterMenuBeverage extends RecyclerView.Adapter<RvAdapterMenuBev
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
     public void onBindViewHolder(RvAdapterMenuBeverage.ViewHolder holder, int position) {
-        Menu.Beverage beverage = beverages.get(position);
+        MenuDTO.Beverage beverage = beverages.get(position);
         if(position % 2 == 0){
             holder.loMenuItem.setBackgroundColor(0xFFF4F4F2);
         }else{

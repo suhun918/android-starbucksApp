@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cos.mystarbucks.Adapter.RvAdapterMenuCoffee;
-import com.cos.mystarbucks.model.Menu;
+import com.cos.mystarbucks.model.MenuDTO;
 import com.cos.mystarbucks.service.MenuService;
 
 
@@ -55,17 +55,17 @@ public class FragmentCoffee extends Fragment {
         final RvAdapterMenuCoffee Adapter = new RvAdapterMenuCoffee(actMenu);
 
         final MenuService menuService = MenuService.retrofit.create(MenuService.class);
-        Call<Menu> call = menuService.repoContributors();
-        call.enqueue(new Callback<Menu>() {
+        Call<MenuDTO> call = menuService.repoContributors();
+        call.enqueue(new Callback<MenuDTO>() {
             @Override
-            public void onResponse(Call<Menu> call,
-                                   Response<Menu> response) {
-                Menu menu = response.body();
-                Adapter.addItems(menu.getCoffees());
+            public void onResponse(Call<MenuDTO> call,
+                                   Response<MenuDTO> response) {
+                MenuDTO menuDTO = response.body();
+                Adapter.addItems(menuDTO.getCoffees());
                 recyclerView.setAdapter(Adapter);
             }
             @Override
-            public void onFailure(Call<Menu> call, Throwable t) {
+            public void onFailure(Call<MenuDTO> call, Throwable t) {
             }
         });
     }

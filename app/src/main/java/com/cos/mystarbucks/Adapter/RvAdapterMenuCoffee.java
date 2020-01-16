@@ -10,22 +10,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cos.mystarbucks.PurchaseActivity;
 import com.cos.mystarbucks.R;
-import com.cos.mystarbucks.model.Menu;
+import com.cos.mystarbucks.model.MenuDTO;
 
 import com.cos.mystarbucks.util.Localhost;
-import com.cos.mystarbucks.util.RoundedTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RvAdapterMenuCoffee extends RecyclerView.Adapter<RvAdapterMenuCoffee.ViewHolder> {
-    List<Menu.Coffee> coffees = new ArrayList<>();
+    List<MenuDTO.Coffee> coffees = new ArrayList<>();
     Activity actMenu;
 
     public RvAdapterMenuCoffee(Activity actMenu) {
@@ -66,7 +64,7 @@ public class RvAdapterMenuCoffee extends RecyclerView.Adapter<RvAdapterMenuCoffe
             loMenuItem = itemView.findViewById(R.id.lo_menuItem);
 
         }
-        public void setItem(Menu.Coffee coffees){
+        public void setItem(MenuDTO.Coffee coffees){
             tvCoffeeName.setText(coffees.getName());
             tvCoffeePrice.setText(coffees.getPrice()+" 원");
             Picasso.get()
@@ -75,12 +73,12 @@ public class RvAdapterMenuCoffee extends RecyclerView.Adapter<RvAdapterMenuCoffe
         }
     }
 
-    public void addItem(Menu.Coffee coffee){
+    public void addItem(MenuDTO.Coffee coffee){
 
         coffees.add(coffee);
     }
 
-    public void addItems(List<Menu.Coffee> coffee){
+    public void addItems(List<MenuDTO.Coffee> coffee){
 
         this.coffees = coffee;
     }
@@ -97,7 +95,7 @@ public class RvAdapterMenuCoffee extends RecyclerView.Adapter<RvAdapterMenuCoffe
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
     public void onBindViewHolder(RvAdapterMenuCoffee.ViewHolder holder, int position) {
-        Menu.Coffee coffee = coffees.get(position);
+        MenuDTO.Coffee coffee = coffees.get(position);
         if(position % 2 == 0){
             holder.loMenuItem.setBackgroundColor(0xFFF4F4F2);
         }else{

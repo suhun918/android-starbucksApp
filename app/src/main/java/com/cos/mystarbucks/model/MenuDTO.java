@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Menu {
+public class MenuDTO {
     private List<Coffee> coffees;
     private List<Beverage> beverages;
     private List<Food> foods;

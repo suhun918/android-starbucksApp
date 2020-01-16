@@ -14,12 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cos.mystarbucks.Adapter.RvAdapterMenuBeverage;
-import com.cos.mystarbucks.Adapter.RvAdapterMenuCoffee;
-import com.cos.mystarbucks.model.Menu;
+import com.cos.mystarbucks.model.MenuDTO;
 import com.cos.mystarbucks.service.MenuService;
-import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,17 +54,17 @@ public class FragmentBeverage extends Fragment {
         final RvAdapterMenuBeverage Adapter = new RvAdapterMenuBeverage(actMenu);
 
         final MenuService menuService = MenuService.retrofit.create(MenuService.class);
-        Call<Menu> call = menuService.repoContributors();
-        call.enqueue(new Callback<Menu>() {
+        Call<MenuDTO> call = menuService.repoContributors();
+        call.enqueue(new Callback<MenuDTO>() {
             @Override
-            public void onResponse(Call<Menu> call,
-                                   Response<Menu> response) {
-                Menu menu = response.body();
-                Adapter.addItems(menu.getBeverages());
+            public void onResponse(Call<MenuDTO> call,
+                                   Response<MenuDTO> response) {
+                MenuDTO menuDTO = response.body();
+                Adapter.addItems(menuDTO.getBeverages());
                 recyclerView.setAdapter(Adapter);
             }
             @Override
-            public void onFailure(Call<Menu> call, Throwable t) {
+            public void onFailure(Call<MenuDTO> call, Throwable t) {
             }
         });
     }

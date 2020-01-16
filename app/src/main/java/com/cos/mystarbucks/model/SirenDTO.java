@@ -7,7 +7,7 @@ import lombok.Data;
 
 
 @Data
-public class Siren{
+public class SirenDTO {
     private List<Food> foods;
     private List<Beverage> beverages;
 
