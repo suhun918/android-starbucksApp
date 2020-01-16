@@ -40,7 +40,7 @@
         android:id="@+id/navigationView"
         android:layout_gravity="start"
         app:headerLayout="@layout/header_layout"
-        app:menuDTO="@menuDTO/drawer_menu">
+        app:menu="@menu/drawer_menu">
     </com.google.android.material.navigation.NavigationView>
 
 
