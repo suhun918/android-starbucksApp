@@ -82,7 +82,7 @@ public class CardActivity extends AppCompatActivity{
     }
 
     private void rvDataSetting() {
-        final RvAdapterPointCard Adapter = new RvAdapterPointCard();
+        final RvAdapterPointCard Adapter = new RvAdapterPointCard(this);
 
         final CardService cardService = CardService.retrofit.create(CardService.class);
         Call<PointCardDTO> call = cardService.repoContributors();
