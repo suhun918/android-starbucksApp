@@ -15,5 +15,7 @@
 <color name="colorPurchasePlusMinusTxt">#7B6E65</color>
 <color name="colorPurchaseBtn">#7B6D64</color>
 <color name="colorCardBackground">#F4F4F2</color>
+<color name="colorWhatsNewFirstTextVIew">#FAFAFA</color>
+<color name="colorWhatsNewRvItemLine">#DBDBDB</color>
 
 </resources>

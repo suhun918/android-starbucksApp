@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorCardBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/lo_whatsnewItem">
+        <TextView
+            android:id="@+id/tv_what_id"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="5"
+            android:gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/tv_what_title"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="20"
+            android:gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/tv_what_createdate"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="10"
+            android:gravity="center_vertical"/>
+    </LinearLayout>
+    <View
+        android:id="@+id/view10"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:background="@color/colorWhatsNewRvItemLine"/>
+
+</LinearLayout>
