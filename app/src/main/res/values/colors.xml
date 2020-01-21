@@ -17,5 +17,5 @@
 <color name="colorCardBackground">#F4F4F2</color>
 <color name="colorWhatsNewFirstTextVIew">#FAFAFA</color>
 <color name="colorWhatsNewRvItemLine">#DBDBDB</color>
-
+<color name="colorWhatsNewDetailBtn">#666666</color>
 </resources>

@@ -16,12 +16,14 @@
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_weight="5"
+            android:layout_marginStart="10dp"
             android:gravity="center_vertical"/>
         <TextView
             android:id="@+id/tv_what_title"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_weight="20"
+            android:textColor="@color/colorBlack"
             android:gravity="center_vertical"/>
 
         <TextView

@@ -1,5 +1,6 @@
 package com.cos.mystarbucks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,8 @@ public class WhatsNewActivity extends AppCompatActivity {
     private View header;
     private Button btnLogin;
 
+
+
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -48,7 +51,6 @@ public class WhatsNewActivity extends AppCompatActivity {
 
         recyclerView();
         rvDataSetting();
-
 
     }
 

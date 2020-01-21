@@ -21,6 +21,7 @@
             android:orientation="vertical"
             android:background="@color/colorWhite">
             <TextView
+                android:id="@+id/tv_wn1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorWhatsNewFirstTextVIew"

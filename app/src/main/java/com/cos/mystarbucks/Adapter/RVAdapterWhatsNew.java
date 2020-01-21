@@ -1,6 +1,8 @@
 package com.cos.mystarbucks.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cos.mystarbucks.R;
+import com.cos.mystarbucks.WNDetailActivity;
+import com.cos.mystarbucks.WhatsNewActivity;
 import com.cos.mystarbucks.model.BoardDTO;
+import com.cos.mystarbucks.util.Localhost;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,6 +39,21 @@ public class RVAdapterWhatsNew extends RecyclerView.Adapter<RVAdapterWhatsNew.Vi
 
         ViewHolder(View itemView) {
             super(itemView) ;
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION){
+                        int id = boards.get(pos).getId();
+                        String title = boards.get(pos).getTitle();
+                        Intent what = new Intent(actWhat, WNDetailActivity.class);
+                        what.putExtra("id",id); /*송신*/
+                        what.putExtra("title",title);
+                        actWhat.startActivity(what);
+                    }
+                }
+            });
+
             // 뷰 객체에 대한 참조. (hold strong reference)
             tvBoardId = itemView.findViewById(R.id.tv_what_id);
             tvBoardTitle = itemView.findViewById(R.id.tv_what_title);
@@ -39,9 +61,10 @@ public class RVAdapterWhatsNew extends RecyclerView.Adapter<RVAdapterWhatsNew.Vi
 
         }
         public void setItem(BoardDTO.Board boards){
+
             tvBoardId.setText(boards.getId()+"");
             tvBoardTitle.setText(boards.getTitle());
-            tvBoardCreateDate.setText(boards.getCreateDate());
+            tvBoardCreateDate.setText(boards.getCreateDate().toString().replaceAll("\\.\\d+", ""));
         }
     }
 
