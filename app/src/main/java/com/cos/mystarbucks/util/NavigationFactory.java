@@ -15,6 +15,7 @@ import com.cos.mystarbucks.CardActivity;
 import com.cos.mystarbucks.LoginActivity;
 import com.cos.mystarbucks.MainActivity;
 import com.cos.mystarbucks.MenuActivity;
+import com.cos.mystarbucks.MyPageActivity;
 import com.cos.mystarbucks.R;
 import com.cos.mystarbucks.SirenOrderActivity;
 import com.cos.mystarbucks.StoreActivity;
@@ -102,7 +103,14 @@ public class NavigationFactory {
                         menu.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(menu);
                         break;
+                    case R.id.nav_myPage:
 
+                        Intent myPage = new Intent(context.getApplicationContext(), MyPageActivity.class);
+                        myPage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        myPage.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        myPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(myPage);
+                        break;
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;

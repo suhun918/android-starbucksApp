@@ -28,7 +28,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:hint="아이디"
-        android:inputType="text" />
+        android:inputType="text"
+        android:privateImeOptions="defaultInputmode=english" />
 
     <EditText
         android:id="@+id/join_password"
@@ -84,7 +85,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:hint="이름"
-        android:inputType="text" />
+        android:inputType="text"
+        android:privateImeOptions="defaultInputmode=korean" />
 
     <LinearLayout
         android:layout_width="match_parent"

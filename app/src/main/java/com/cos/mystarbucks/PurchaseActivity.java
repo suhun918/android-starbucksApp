@@ -7,7 +7,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +26,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.text.DecimalFormat;
+
 public class PurchaseActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageView ivImg;
@@ -34,6 +35,7 @@ public class PurchaseActivity extends AppCompatActivity {
     private Button btnIncrease, btnDecrease, btnCart, btnOrder;
     private int count = 1, price;
     private String name, img;
+    private DecimalFormat formatter;
 
     private User user = User.getInstance();
     private AlertDialog adNotExistCard, adNotPoint, adSuccess, adNotLogin, adQuestion;
@@ -54,6 +56,7 @@ public class PurchaseActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarBack);
         btnCart = findViewById(R.id.btn_cart);
         btnOrder = findViewById(R.id.btn_order);
+        formatter = new DecimalFormat("###,###");
     }
 
     private void toolbarSetting() {
@@ -88,7 +91,7 @@ public class PurchaseActivity extends AppCompatActivity {
         tvName.setText(name);
 
         price = intent.getExtras().getInt("price");
-        tvPrice.setText(price + "원");
+        tvPrice.setText(formatter.format(price)+" 원");
 
         RoundedTransform transform = new RoundedTransform(100, 0);
         img = intent.getExtras().getString("img");
@@ -108,11 +111,10 @@ public class PurchaseActivity extends AppCompatActivity {
         btnIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (count < 20) {
+                if(count < 20){
                     count = count + 1;
                     tvCount.setText(count + "");
-                    tvPrice.setText(count * price + "원");
-
+                    tvPrice.setText(formatter.format(count*price)+" 원");
                 }
             }
         });
@@ -120,12 +122,11 @@ public class PurchaseActivity extends AppCompatActivity {
         btnDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (count > 1) {
+                if(count > 1){
                     count = count - 1;
                     tvCount.setText(count + "");
-                    tvPrice.setText(count * price + "원");
+                    tvPrice.setText(formatter.format(count*price)+" 원");
                 }
-
             }
         });
     }

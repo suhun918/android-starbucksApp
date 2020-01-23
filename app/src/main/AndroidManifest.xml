@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".WNDetailActivity"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -37,6 +36,8 @@
         <activity android:name=".CardActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".JoinActivity" />
+        <activity android:name=".MyPageActivity" />
+        <activity android:name=".WNDetailActivity" />
     </application>
 
 </manifest>

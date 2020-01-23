@@ -27,7 +27,7 @@ public class MenuActivity extends AppCompatActivity {
     private View header;
     private Button btnLogin;
 
-    private FragmentAdapterMenu adapter;
+    private FragmentAdapter adapter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
@@ -69,7 +69,7 @@ public class MenuActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.vp_container);
         tabLayout = findViewById(R.id.tabs);
 
-        adapter = new FragmentAdapterMenu(getSupportFragmentManager(),1);
+        adapter = new FragmentAdapter(getSupportFragmentManager(),1);
 
         adapter.addFragment(new FragmentCoffee(this));
         adapter.addFragment(new FragmentBeverage(this));

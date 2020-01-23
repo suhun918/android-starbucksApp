@@ -73,6 +73,7 @@
             android:layout_marginEnd="20dp"
             android:hint="아이디"
             android:inputType="text"
+            android:privateImeOptions="defaultInputmode=english"
             app:layout_constraintBottom_toTopOf="@+id/passwordInput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -25,5 +25,9 @@
             android:id="@+id/nav_menu"
             android:icon="@drawable/ic_whole_menu"
             android:title="전체메뉴"></item>
+        <item
+            android:id="@+id/nav_myPage"
+            android:icon="@drawable/ic_my_page"
+            android:title="MyPage"></item>
     </group>
 </menu>

@@ -11,11 +11,11 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentAdapterMenu extends FragmentPagerAdapter {
+public class FragmentAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragmentList = new ArrayList<>();
 
     // FragmentPagerAdapter를 상속하면 해당 생성자가 꼭 필요하다.
-    public FragmentAdapterMenu(@NonNull FragmentManager fm, int behavior){
+    public FragmentAdapter(@NonNull FragmentManager fm, int behavior){
         super(fm, behavior);
     }
 
