@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +30,7 @@ public class JoinActivity extends AppCompatActivity {
 
     private Button btnJoin;
     private EditText etUsername, etPassword, etPasswordCheck, etEmail, etName;
-    AlertDialog.Builder alertBuilder;
+    private AlertDialog.Builder alertBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -15,34 +15,6 @@
             android:background="@color/colorWhite">
 
             <include layout="@layout/toolbar"/>
-
-            <View
-                android:id="@+id/view156"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@color/colorBlack" />
-            <TextView
-                android:id="@+id/tv_WNDTitle"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textColor="@android:color/black"
-                android:background="@color/colorWhite"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"/>
-            <View
-                android:id="@+id/view256"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@color/colorBlack" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

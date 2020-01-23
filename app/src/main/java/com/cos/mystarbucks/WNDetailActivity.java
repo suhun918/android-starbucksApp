@@ -42,7 +42,6 @@ public class WNDetailActivity extends AppCompatActivity {
     private WebSettings mWebSettings; //웹뷰세팅
     private Button btnBack;
 
-    private TextView tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,11 +95,7 @@ public class WNDetailActivity extends AppCompatActivity {
     }
 
     private void getData(){
-        tvTitle = findViewById(R.id.tv_WNDTitle);
         Intent intent = getIntent();
-        String title = intent.getExtras().getString("title");
-        tvTitle.setText(title);
-
         int id = intent.getExtras().getInt("id");
 
         mWebView = (WebView) findViewById(R.id.wv_wnd);
@@ -112,11 +107,12 @@ public class WNDetailActivity extends AppCompatActivity {
         mWebSettings.setJavaScriptCanOpenWindowsAutomatically(false); // 자바스크립트 새창 띄우기(멀티뷰) 허용 여부
         mWebSettings.setLoadWithOverviewMode(true); // 메타태그 허용 여부
         mWebSettings.setUseWideViewPort(true); // 화면 사이즈 맞추기 허용 여부
-        mWebSettings.setSupportZoom(false); // 화면 줌 허용 여부
-        mWebSettings.setBuiltInZoomControls(false); // 화면 확대 축소 허용 여부
+        mWebSettings.setSupportZoom(true); // 화면 줌 허용 여부
+        mWebSettings.setBuiltInZoomControls(true); // 화면 확대 축소 허용 여부
         mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 컨텐츠 사이즈 맞추기
         mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 브라우저 캐시 허용 여부
         mWebSettings.setDomStorageEnabled(true); // 로컬저장소 허용 여부
+
 
         mWebView.loadUrl(Localhost.URL+"/board/Adetail/"+id); // 웹뷰에 표시할 웹사이트 주소, 웹뷰 시작
     }

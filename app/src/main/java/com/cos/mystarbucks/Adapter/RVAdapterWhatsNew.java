@@ -45,10 +45,8 @@ public class RVAdapterWhatsNew extends RecyclerView.Adapter<RVAdapterWhatsNew.Vi
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
                         int id = boards.get(pos).getId();
-                        String title = boards.get(pos).getTitle();
                         Intent what = new Intent(actWhat, WNDetailActivity.class);
                         what.putExtra("id",id); /*송신*/
-                        what.putExtra("title",title);
                         actWhat.startActivity(what);
                     }
                 }
