@@ -95,8 +95,8 @@ public class MyPageActivity extends AppCompatActivity {
         // ProgressDialog 띄우기
         progressDialog.show();
 
-        final MyPageService menuService = MyPageService.retrofit.create(MyPageService.class);
-        Call<MyPageDTO> call = menuService.repoContributors(user.getCookie());
+        final MyPageService myPageService = MyPageService.retrofit.create(MyPageService.class);
+        Call<MyPageDTO> call = myPageService.repoContributors(user.getCookie());
         call.enqueue(new Callback<MyPageDTO>() {
             @Override
             public void onResponse(Call<MyPageDTO> call, Response<MyPageDTO> response) {
@@ -143,7 +143,7 @@ public class MyPageActivity extends AppCompatActivity {
         // ViewPager와 TabLayout 연결
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setText("카드충전");
+        tabLayout.getTabAt(0).setText("내 카드");
         tabLayout.getTabAt(1).setText("My 메뉴");
         tabLayout.getTabAt(2).setText("구매내역");
     }

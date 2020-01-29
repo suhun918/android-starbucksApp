@@ -97,7 +97,7 @@ public class JoinActivity extends AppCompatActivity {
                     progressDialog.setCancelable(false);
                     progressDialog.show();
 
-                    final UserService userService = UserService.retrofit.create(UserService.class);
+                    UserService userService = UserService.retrofit.create(UserService.class);
                     Call<ResponseBody> call = userService.join(map);
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override

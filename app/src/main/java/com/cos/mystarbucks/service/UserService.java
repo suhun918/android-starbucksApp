@@ -28,9 +28,6 @@ public interface UserService {
     @POST("/android/joinProc")
     Call<ResponseBody> join(@FieldMap Map<String, String> body);
 
-    @GET("/test")
-    Call<ResponseBody> test(@Header("Cookie") String cookie);
-
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Localhost.URL)

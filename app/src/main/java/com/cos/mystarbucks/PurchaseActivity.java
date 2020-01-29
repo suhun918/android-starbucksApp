@@ -187,10 +187,10 @@ public class PurchaseActivity extends AppCompatActivity {
                                                         .setNegativeButton("등록", new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
-                                                                Intent card = new Intent(getApplicationContext(), CardActivity.class);
-                                                                card.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                                card.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                                                startActivity(card);
+                                                                Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                                startActivity(intent);
                                                             }
                                                         });
                                                 adNotExistCard = abNotExistCard.create();
@@ -209,10 +209,10 @@ public class PurchaseActivity extends AppCompatActivity {
                                                         .setNegativeButton("충전", new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
-                                                                Intent card = new Intent(getApplicationContext(), CardActivity.class);
-                                                                card.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                                card.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                                                startActivity(card);
+                                                                Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                                startActivity(intent);
                                                             }
                                                         });
                                                 adNotPoint = abNotPoint.create();
@@ -226,10 +226,10 @@ public class PurchaseActivity extends AppCompatActivity {
                                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
-                                                                Intent card = new Intent(getApplicationContext(), MainActivity.class);
-                                                                card.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                                card.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                                                startActivity(card);
+                                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                                startActivity(intent);
                                                             }
                                                         });
                                                 adSuccess = abSuccess.create();
@@ -256,19 +256,19 @@ public class PurchaseActivity extends AppCompatActivity {
                             .setPositiveButton("로그인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent Login = new Intent(getApplicationContext(), LoginActivity.class);
-                                    Login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    Login.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                    startActivity(Login);
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    startActivity(intent);
                                 }
                             })
                             .setNegativeButton("회원가입", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent join = new Intent(getApplicationContext(), JoinActivity.class);
-                                    join.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    join.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                    startActivity(join);
+                                    Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    startActivity(intent);
                                 }
                             });
                     adNotLogin = abNotLogin.create();
