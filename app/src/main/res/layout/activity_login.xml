@@ -90,7 +90,7 @@
             android:layout_marginBottom="76dp"
             android:hint="비밀번호"
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login_active"
+            app:layout_constraintBottom_toTopOf="@+id/btn_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -99,16 +99,19 @@
             android:layout_width="260dp"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login_active"
+            app:layout_constraintBottom_toTopOf="@+id/btn_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordInput">
+
 
             <TextView
                 android:id="@+id/tv_Login_findUsername"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:gravity="center"
                 android:text="아이디 찾기"
                 android:textColor="@color/colorBlack" />
@@ -153,18 +156,34 @@
                 android:textColor="@color/colorBlack" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_login_active"
+        <LinearLayout
+            android:id="@+id/btn_layout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/colorloginActiveButton"
-            android:text="로그인하기"
-            android:textSize="15sp"
-            android:textColor="@color/colorWhite"
+            android:layout_height="55dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.kakao.usermgmt.LoginButton
+                android:id="@+id/com_kakao_login"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:gravity="center"/>
+            <Button
+                android:id="@+id/btn_login_active"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:background="@color/colorloginActiveButton"
+                android:text="로그인하기"
+                android:textSize="15sp"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView

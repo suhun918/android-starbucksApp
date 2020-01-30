@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".KJoinActivity">
+
+
+    <include layout="@layout/toolbar_back"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
+        android:text="카카오 회원가입을 위한\n추가정보를 입력해주세요"
+        android:gravity="center"
+        android:textColor="@color/colorBlack"
+        android:textSize="24sp" />
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="이메일을\n입력해주세요."
+        android:textColor="@color/colorBlack"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/k_join_email"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="이메일"
+        android:inputType="textWebEmailAddress" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="이름을\n입력해주세요."
+        android:textColor="@color/colorBlack"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/k_join_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="이름"
+        android:inputType="text"
+        android:privateImeOptions="defaultInputmode=korean" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_k_join"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/colorloginActiveButton"
+            android:text="회원가입"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -25,8 +25,16 @@ public interface UserService {
     Call<User> login(@FieldMap Map<String, String> body);
 
     @FormUrlEncoded
+    @POST("/android/kakaoSubscribeCheck")
+    Call<User> kakaoSubscribeCheck(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
     @POST("/android/joinProc")
     Call<ResponseBody> join(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("/android/kakaoJoinProc")
+    Call<ResponseBody> kakaoJoin(@FieldMap Map<String, String> body);
 
 
     public static final Retrofit retrofit = new Retrofit.Builder()

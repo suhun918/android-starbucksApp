@@ -22,6 +22,8 @@ import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.service.UserService;
 import com.cos.mystarbucks.util.NavigationFactory;
 import com.google.android.material.navigation.NavigationView;
+import com.kakao.auth.Session;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,17 +48,24 @@ public class LoginActivity extends AppCompatActivity {
 
     private AlertDialog.Builder alertBuilder;
 
+//  카카오로그인
+    private SessionCallback callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+//      카카오로그인
+        callback = new SessionCallback(this);
+        Session.getCurrentSession().addCallback(callback);
+//        ======================
         navigationSetting();
         toolbarSetting();
 
         minit();
         setClickEventListener();
+
+
     }
 
     private void navigationSetting(){
@@ -202,3 +211,5 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 }
+
+
