@@ -1,6 +1,7 @@
 package com.cos.mystarbucks.service;
 
 
+import com.cos.mystarbucks.model.CartDTO;
 import com.cos.mystarbucks.model.SirenDTO;
 import com.cos.mystarbucks.util.Localhost;
 
@@ -23,6 +24,18 @@ public interface SirenService {
     @FormUrlEncoded
     @POST("/android/order")
     Call<ResponseBody> order(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("/android/cartAction")
+    Call<ResponseBody> cart(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("/android/cart")
+    Call<CartDTO> cartrepoContributors(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("/android/deleteCart")
+    Call<ResponseBody> deleteCart(@FieldMap Map<String, String> body);
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Localhost.URL)

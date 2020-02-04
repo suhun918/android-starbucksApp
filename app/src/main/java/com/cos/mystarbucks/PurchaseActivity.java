@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -38,7 +39,7 @@ public class PurchaseActivity extends AppCompatActivity {
     private DecimalFormat formatter;
 
     private User user = User.getInstance();
-    private AlertDialog adNotExistCard, adNotPoint, adSuccess, adNotLogin, adQuestion;
+    private AlertDialog adNotExistCard, adNotPoint, adSuccess, adNotLogin, adQuestion, adExistProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class PurchaseActivity extends AppCompatActivity {
         receiveData();
         quantity();
         trade();
+        cart();
     }
 
     private void minit() {
@@ -67,18 +69,29 @@ public class PurchaseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);//검정화살표가 나오길래 내가 집어넣는 하얀 화살표
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_action_cart, menu) ;
+        return true ;
+    }
 
-    //툴바버튼 클릭 이벤트
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {//여기서 버튼별로 인텐트도 가능
-            case android.R.id.home: {//toolbar의 back키를 눌렀을 때 동작
+        switch (item.getItemId()) {
+            case android.R.id.home: //toolbar의 back키를 눌렀을 때 동작
                 finish();
                 return true;
-            }
+            case R.id.action_cart :
+                Intent cart = new Intent(this.getApplicationContext(), CartActivity.class);
+                cart.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                cart.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(cart);
+                return true ;
+            default :
+                return super.onOptionsItemSelected(item) ;
         }
-        return super.onOptionsItemSelected(item);
     }
+
 
     private void receiveData() {
         tvName = findViewById(R.id.tv_purName);
@@ -279,6 +292,123 @@ public class PurchaseActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void cart(){
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user.getId() != 0) {
+                    Intent intent = getIntent();
+                    name = intent.getExtras().getString("name");
+                    AlertDialog.Builder abQuestion = new AlertDialog.Builder(PurchaseActivity.this);
+                    abQuestion
+                            .setMessage(name+"을(를) 장바구니에 추가하시겠습니까?")
+                            .setCancelable(false)
+                            .setPositiveButton("아니요", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .setNegativeButton("예", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+
+                                    Map cart = new HashMap();
+                                    cart.put("userId", user.getId() + "");
+                                    cart.put("name", name);
+                                    cart.put("price", price + "");
+
+                                    final SirenService sirenService = SirenService.retrofit.create(SirenService.class);
+                                    Call<ResponseBody> call = sirenService.cart(cart);
+
+                                    call.enqueue(new Callback<ResponseBody>() {
+                                        @Override
+                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                            String res = null;
+                                            try {
+                                                res = response.body().string();
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            if (res.equals("existProduct")) {
+                                                //이미 해당물품이 장바구니에 있는 경우
+                                                Intent intent = getIntent();
+                                                name = intent.getExtras().getString("name");
+                                                AlertDialog.Builder abExistCart = new AlertDialog.Builder(PurchaseActivity.this);
+                                                abExistCart
+                                                        .setMessage(name+"은(는) 이미 장바구니에 있는 품목입니다.")
+                                                        .setCancelable(false)
+                                                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                            }
+                                                        });
+                                                adExistProduct = abExistCart.create();
+                                                adExistProduct.show();
+                                            } else if(res.equals("cartSuccess")) {
+                                                //담기 성공
+                                                Intent intent = getIntent();
+                                                name = intent.getExtras().getString("name");
+                                                AlertDialog.Builder absuccessCart = new AlertDialog.Builder(PurchaseActivity.this);
+                                                absuccessCart
+                                                        .setMessage(name+"이(가) 장바구니에 추가 됐습니다.")
+                                                        .setCancelable(false)
+                                                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                            }
+                                                        });
+
+                                                adNotPoint = absuccessCart.create();
+                                                adNotPoint.show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                        }
+                                    });
+                                }
+                            });
+                    adQuestion = abQuestion.create();
+                    adQuestion.show();
+
+
+                } else {
+                    AlertDialog.Builder abNotLogin = new AlertDialog.Builder(PurchaseActivity.this);
+                    abNotLogin
+                            .setMessage("로그인이 필요한 서비스입니다.")
+                            .setCancelable(false)
+                            .setPositiveButton("로그인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("회원가입", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    startActivity(intent);
+                                }
+                            });
+                    adNotLogin = abNotLogin.create();
+                    adNotLogin.show();
+
+                }
+            }
+        });
+    }
+
 
 
 }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="100"
+        android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="80"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_cart_name"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:text="제품이름"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:background="@color/colorWhite"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorSirenOrderBackground"/>
+
+        <TextView
+            android:id="@+id/tv_cart_price"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:text="가격"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:background="@color/colorWhite"/>
+    </LinearLayout>
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorSirenOrderBackground"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="20"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_cart_plus"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:background="@color/colorPurchasePlusMinusBtn"
+            android:text="+"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/tv_cart_count"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/btn_cart_minus"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:text="-"
+            android:textSize="20sp"
+            android:background="@color/colorPurchasePlusMinusBtn"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_cart_delete"
+        android:text="삭제"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="20"
+        android:background="@color/colorPurchaseBtn"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:background="@color/colorSirenOrderBackground"/>
+</LinearLayout>

@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-
         android:name=".GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".CartActivity"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -30,9 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".KJoinActivity"></activity>
+        <activity android:name=".KJoinActivity" />
         <activity android:name=".PurchaseActivity" />
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".LoginActivity"
             android:configChanges="orientation|screenSize" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".WhatsNewActivity" />

@@ -18,4 +18,6 @@
 <color name="colorWhatsNewFirstTextVIew">#FAFAFA</color>
 <color name="colorWhatsNewRvItemLine">#DBDBDB</color>
 <color name="colorWhatsNewDetailBtn">#666666</color>
+<color name="colorCartBackground">#494440</color>
+<color name="colorCartAllPrice">#9D8756</color>
 </resources>

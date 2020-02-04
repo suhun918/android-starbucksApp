@@ -11,6 +11,8 @@ import android.content.Intent;
 
 import android.os.Bundle;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,7 +40,7 @@ public class SirenOrderActivity extends AppCompatActivity {
     private View header;
     private Button btnLogin;
 
-    private TextView AllMenuIcon;
+    private TextView AllMenuIcon, toolbarText;
     private RecyclerView fRecyclerView, bRecyclerView;
     private RecyclerView.LayoutManager flayoutManager, blayoutManager;
 
@@ -59,6 +61,7 @@ public class SirenOrderActivity extends AppCompatActivity {
     private void navigationSetting(){
         toolbar = findViewById(R.id.toolbar);
         menuIcon = findViewById(R.id.menu_icon);
+        toolbarText = findViewById(R.id.toolbar_text);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
@@ -70,6 +73,8 @@ public class SirenOrderActivity extends AppCompatActivity {
     }
 
     private void toolbarSetting(){
+        toolbarText.setText("사이렌 오더");
+        toolbarText.setTextSize(20);
         setSupportActionBar(toolbar);
         menuIcon.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -143,6 +148,26 @@ public class SirenOrderActivity extends AppCompatActivity {
         }else{
             btnLogin.setText("로그인");
             tv.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_action_cart, menu) ;
+        return true ;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_cart :
+                Intent cart = new Intent(this.getApplicationContext(), CartActivity.class);
+                cart.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                cart.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(cart);
+                return true ;
+            default :
+                return super.onOptionsItemSelected(item) ;
         }
     }
 
