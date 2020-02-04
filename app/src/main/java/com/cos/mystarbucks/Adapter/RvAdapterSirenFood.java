@@ -41,11 +41,13 @@ public class RvAdapterSirenFood extends RecyclerView.Adapter<RvAdapterSirenFood.
                 public void onClick(View v){
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
+                        int id = foods.get(pos).getId();
                         String name = foods.get(pos).getName();
                         int price = foods.get(pos).getPrice();
                         String img = Localhost.URL+foods.get(pos).getImage();
                         Intent what = new Intent(actSiren, PurchaseActivity.class);
-                        what.putExtra("name",name); /*송신*/
+                        what.putExtra("food",id); /*송신*/
+                        what.putExtra("name",name);
                         what.putExtra("price",price);
                         what.putExtra("img",img);
                         actSiren.startActivity(what);

@@ -40,7 +40,7 @@ public class SirenOrderActivity extends AppCompatActivity {
     private View header;
     private Button btnLogin;
 
-    private TextView AllMenuIcon, toolbarText;
+    private TextView allMenu, myMenu, history, toolbarText;
     private RecyclerView fRecyclerView, bRecyclerView;
     private RecyclerView.LayoutManager flayoutManager, blayoutManager;
 
@@ -86,14 +86,38 @@ public class SirenOrderActivity extends AppCompatActivity {
     }
 
     private void IconIntent(){
-        AllMenuIcon = findViewById(R.id.tv_SirenAllMenu);
-        AllMenuIcon.setOnClickListener(new View.OnClickListener() {
+        allMenu = findViewById(R.id.tv_SirenAllMenu);
+        allMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent menu = new Intent(getApplicationContext(), MenuActivity.class);
                 menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 menu.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(menu);
+            }
+        });
+
+        myMenu = findViewById(R.id.tv_SirenMyMenu);
+        myMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra("fragmentId", 1);
+                startActivity(intent);
+            }
+        });
+
+        history = findViewById(R.id.tv_SirenHistory);
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra("fragmentId", 2);
+                startActivity(intent);
             }
         });
     }

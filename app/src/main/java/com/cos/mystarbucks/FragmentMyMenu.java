@@ -2,6 +2,7 @@ package com.cos.mystarbucks;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +10,24 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.cos.mystarbucks.Adapter.RvAdapterMenuCoffee;
+import com.cos.mystarbucks.Adapter.RvAdapterMyMenu;
 
 public class FragmentMyMenu extends Fragment {
 
-    private Activity act;
+    private MyPageActivity activity;
 
-    // 내가 실행하는게 아님!!
-    // fragment_first.xml 을 메모리에 로딩하고 Activity에 붙여서 return 하면 됨.
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+
+
+    public FragmentMyMenu(Activity activity) {
+        this.activity = (MyPageActivity)activity;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -24,11 +36,24 @@ public class FragmentMyMenu extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_my_menu, container, false);
 
+        if( activity.myPageDTO.getMyCoffeeList().size() > 0 || activity.myPageDTO.getMyBeverageList().size() > 0 ){
+            v.findViewById(R.id.tv_mymenu).setVisibility(View.GONE);
+
+            layoutManager = new LinearLayoutManager(activity);
+            recyclerView = v.findViewById(R.id.mypage_mymenu);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(layoutManager);
+
+            addItems();
+        }
+
         return v;
     }
 
-    public FragmentMyMenu(Activity act) {
-        this.act = act;
+    private void addItems(){
+        RvAdapterMyMenu Adapter = new RvAdapterMyMenu(activity);
+        Adapter.addItems(activity.myPageDTO.getMyCoffeeList(), activity.myPageDTO.getMyBeverageList());
+        recyclerView.setAdapter(Adapter);
     }
 
 }

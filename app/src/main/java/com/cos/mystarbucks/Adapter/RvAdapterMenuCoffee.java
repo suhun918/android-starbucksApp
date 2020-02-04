@@ -44,11 +44,13 @@ public class RvAdapterMenuCoffee extends RecyclerView.Adapter<RvAdapterMenuCoffe
                 public void onClick(View v){
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
+                        int id = coffees.get(pos).getId();
                         String name = coffees.get(pos).getName();
                         int price = coffees.get(pos).getPrice();
                         String img = Localhost.URL+coffees.get(pos).getImage();
                         Intent what = new Intent(actMenu, PurchaseActivity.class);
-                        what.putExtra("name",name); /*송신*/
+                        what.putExtra("coffee",id); /*송신*/
+                        what.putExtra("name",name);
                         what.putExtra("price",price);
                         what.putExtra("img",img);
                         actMenu.startActivity(what);

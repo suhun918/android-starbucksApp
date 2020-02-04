@@ -42,6 +42,7 @@ public class MyPageActivity extends AppCompatActivity {
 
     private User user;
     public MyPageDTO myPageDTO;
+    public int fragmentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,14 +101,14 @@ public class MyPageActivity extends AppCompatActivity {
         call.enqueue(new Callback<MyPageDTO>() {
             @Override
             public void onResponse(Call<MyPageDTO> call, Response<MyPageDTO> response) {
+                progressDialog.dismiss();
+
                 btnLogin.setText("로그아웃");
                 TextView tv = header.findViewById(R.id.tv_name);
                 tv.setText(user.getName());
                 tv.setVisibility(View.VISIBLE);
 
                 myPageDTO = response.body();
-
-                progressDialog.dismiss();
 
                 // 데이터 받아오면 viewpager, fragment 세팅
                 fragmentViewPager();
@@ -139,6 +140,11 @@ public class MyPageActivity extends AppCompatActivity {
 
         // ViewPager와 Fragment 연결
         viewPager.setAdapter(adapter);
+        Intent intent = getIntent();
+        if(intent.getExtras() != null) {
+            fragmentId = intent.getExtras().getInt("fragmentId");
+        }
+        viewPager.setCurrentItem(fragmentId);
 
         // ViewPager와 TabLayout 연결
         tabLayout.setupWithViewPager(viewPager);

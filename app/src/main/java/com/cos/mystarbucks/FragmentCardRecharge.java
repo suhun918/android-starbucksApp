@@ -47,8 +47,7 @@ public class FragmentCardRecharge extends Fragment {
         this.activity = (MyPageActivity)activity;
     }
 
-    // 내가 실행하는게 아님!!
-    // fragment_first.xml 을 메모리에 로딩하고 Activity에 붙여서 return 하면 됨.
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -70,15 +69,17 @@ public class FragmentCardRecharge extends Fragment {
     }
 
     private void minit(){
-        if(activity.myPageDTO.getCardId() != 0) { // 카드가 등록되어 있는 경우
+        if(activity.myPageDTO.getMyCard() != null) { // 카드가 등록되어 있는 경우
             Picasso.get()
-                    .load(Localhost.URL + activity.myPageDTO.getCardImage())
+                    .load(Localhost.URL + activity.myPageDTO.getMyCard().getCardImage())
                     .into(ivMyCard);
 
-            tvCardName.setText(activity.myPageDTO.getCardName());
+            tvCardName.setText(activity.myPageDTO.getMyCard().getCardName());
 
             DecimalFormat formatter = new DecimalFormat("###,###");
-            tvPoint.setText( formatter.format(activity.myPageDTO.getPoint()) + " 원" );
+            tvPoint.setText( formatter.format(activity.myPageDTO.getMyCard().getPoint()) + " 원" );
+
+            setClickListener();
 
         }else{ // 카드가 없는 경우
             ivMyCard.setImageResource(R.drawable.regi_card);
@@ -92,16 +93,17 @@ public class FragmentCardRecharge extends Fragment {
                     startActivity(intent);
                 }
             });
+            tvCardName.setText("카드를 등록해 주세요.");
         }
+    }
 
+    private void setClickListener(){
         // 충전하기 버튼
         btnRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(activity.myPageDTO.getCardId() != 0){ // 카드가 등록되어 있는 경우
-                    customDialog = new CustomDialogRecharge(activity);
-                    customDialog.show();
-                }
+                customDialog = new CustomDialogRecharge(activity);
+                customDialog.show();
             }
         });
 
@@ -109,41 +111,39 @@ public class FragmentCardRecharge extends Fragment {
         btnDeleteCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(activity.myPageDTO.getCardId() != 0) { // 카드가 등록되어 있는 경우
-                    alertBuilder
-                            .setMessage("남아있는 포인트는 모두 소멸됩니다.\n정말 삭제하시겠습니까?")
-                            .setPositiveButton("예", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
+                alertBuilder
+                        .setMessage("남아있는 포인트는 모두 소멸됩니다.\n정말 삭제하시겠습니까?")
+                        .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
 
-                                    User user = User.getInstance();
+                                User user = User.getInstance();
 
-                                    MyPageService myPageService = MyPageService.retrofit.create(MyPageService.class);
-                                    Call<ResponseBody> call = myPageService.deleteCard( user.getCookie(), activity.myPageDTO.getId() );
-                                    call.enqueue(new Callback<ResponseBody>() {
-                                        @Override
-                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                            activity.finish();
-                                            activity.startActivity(new Intent(activity, MyPageActivity.class));
-                                        }
+                                MyPageService myPageService = MyPageService.retrofit.create(MyPageService.class);
+                                Call<ResponseBody> call = myPageService.deleteCard( user.getCookie(), activity.myPageDTO.getMyCard().getId() );
+                                call.enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        activity.finish();
+                                        activity.startActivity(new Intent(activity, MyPageActivity.class));
+                                    }
 
-                                        @Override
-                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                                        }
-                                    });
+                                    }
+                                });
 
-                                }
-                            })
-                            .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
+                            }
+                        })
+                        .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
 
-                    AlertDialog dialog = alertBuilder.create();
-                    dialog.show();
-                }
+                AlertDialog dialog = alertBuilder.create();
+                dialog.show();
             }
         });
     }

@@ -119,36 +119,56 @@
             android:orientation="horizontal"
             android:background="@color/colorWhite"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="20"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:background="@color/colorWhite"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp">
 
-        <Button
-            android:id="@+id/btn_cart"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:background="@color/colorPurchaseBtn"
-            android:textColor="@color/colorWhite"
-            android:text="담 기"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="5dp"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:background="@color/colorPurchaseBtn"
+                android:textColor="@color/colorWhite"
+                android:text="담 기"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"/>
+            <Button
+                android:id="@+id/btn_mymenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:background="@color/colorPurchaseBtn"
+                android:textColor="@color/colorWhite"
+                android:text="나만의 메뉴"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"/>
+        </LinearLayout>
+
         <Button
             android:id="@+id/btn_order"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:background="@color/colorPurchaseBtn"
-            android:textColor="@color/colorWhite"
+            android:background="@color/colorPurchasePlusMinusBtn"
+            android:textColor="@color/colorPurchasePlusMinusTxt"
             android:text="바로 주문하기"
-            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"/>
+
     </LinearLayout>
+
 
 </LinearLayout>

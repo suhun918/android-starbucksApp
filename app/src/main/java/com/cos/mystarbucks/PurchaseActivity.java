@@ -13,8 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cos.mystarbucks.model.User;
+import com.cos.mystarbucks.service.MyPageService;
 import com.cos.mystarbucks.service.SirenService;
 import com.cos.mystarbucks.util.RoundedTransform;
 import com.squareup.picasso.Picasso;
@@ -33,7 +35,7 @@ public class PurchaseActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageView ivImg;
     private TextView tvName, tvPrice, tvCount;
-    private Button btnIncrease, btnDecrease, btnCart, btnOrder;
+    private Button btnIncrease, btnDecrease, btnCart, btnOrder, btnMyMenu;
     private int count = 1, price;
     private String name, img;
     private DecimalFormat formatter;
@@ -52,12 +54,14 @@ public class PurchaseActivity extends AppCompatActivity {
         quantity();
         trade();
         cart();
+        myMenu();
     }
 
     private void minit() {
         toolbar = findViewById(R.id.toolbarBack);
         btnCart = findViewById(R.id.btn_cart);
         btnOrder = findViewById(R.id.btn_order);
+        btnMyMenu = findViewById(R.id.btn_mymenu);
         formatter = new DecimalFormat("###,###");
     }
 
@@ -69,6 +73,7 @@ public class PurchaseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);//검정화살표가 나오길래 내가 집어넣는 하얀 화살표
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar_action_cart, menu) ;
@@ -91,7 +96,6 @@ public class PurchaseActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item) ;
         }
     }
-
 
     private void receiveData() {
         tvName = findViewById(R.id.tv_purName);
@@ -265,7 +269,6 @@ public class PurchaseActivity extends AppCompatActivity {
                     AlertDialog.Builder abNotLogin = new AlertDialog.Builder(PurchaseActivity.this);
                     abNotLogin
                             .setMessage("로그인이 필요한 서비스입니다.")
-                            .setCancelable(false)
                             .setPositiveButton("로그인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -377,12 +380,10 @@ public class PurchaseActivity extends AppCompatActivity {
                     adQuestion = abQuestion.create();
                     adQuestion.show();
 
-
                 } else {
                     AlertDialog.Builder abNotLogin = new AlertDialog.Builder(PurchaseActivity.this);
                     abNotLogin
                             .setMessage("로그인이 필요한 서비스입니다.")
-                            .setCancelable(false)
                             .setPositiveButton("로그인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -403,12 +404,136 @@ public class PurchaseActivity extends AppCompatActivity {
                             });
                     adNotLogin = abNotLogin.create();
                     adNotLogin.show();
-
                 }
             }
         });
     }
 
+    private void myMenu(){
+        btnMyMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if(user.getId() != 0){
+
+                    final Intent intent = getIntent();
+                    // coffeeId, beverageId, foodId 중에 하나만 값을 가지고 나머지는 0 임
+                    // 모두다 0 인 경우 MyPage 에서 넘어온 경우임
+                    final int coffeeId = intent.getExtras().getInt("coffee",0);
+                    final int beverageId = intent.getExtras().getInt("beverage",0);
+                    int foodId = intent.getExtras().getInt("food",0);
+
+                    if(coffeeId==0 && beverageId==0 && foodId==0){ // MyPage 에서 넘어온 경우
+                        Toast myToast = Toast.makeText(getApplicationContext(), "이미 등록한 상품입니다.", Toast.LENGTH_SHORT);
+                        myToast.show();
+
+                    }else{
+
+                        AlertDialog.Builder adb = new AlertDialog.Builder(PurchaseActivity.this);
+                        adb
+                                .setMessage("나만의 메뉴에 등록하시겠습니까?")
+                                .setPositiveButton("등록", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if(coffeeId != 0){
+                                            Map map = new HashMap();
+                                            map.put("coffeeId", Integer.toString(coffeeId));
+                                            map.put("coffeeName", intent.getExtras().getString("name"));
+                                            map.put("price", Integer.toString(intent.getExtras().getInt("price")));
+
+                                            final MyPageService myPageService = MyPageService.retrofit.create(MyPageService.class);
+                                            Call<ResponseBody> call = myPageService.saveCoffee(user.getCookie(), map);
+                                            call.enqueue(new Callback<ResponseBody>() {
+                                                @Override
+                                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                    String res = "";
+                                                    try {
+                                                        res = response.body().string();
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
+
+                                                    if(res.equals("0")){
+                                                        Toast myToast = Toast.makeText(getApplicationContext(), "이미 등록한 상품입니다.", Toast.LENGTH_SHORT);
+                                                        myToast.show();
+                                                    }else  if(res.equals("1")){
+                                                        Toast myToast = Toast.makeText(getApplicationContext(), "등록되었습니다.", Toast.LENGTH_SHORT);
+                                                        myToast.show();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                                }
+                                            });
+
+                                        }else if(beverageId != 0){
+                                            Map map = new HashMap();
+                                            map.put("beverageId", Integer.toString(beverageId));
+                                            map.put("beverageName", intent.getExtras().getString("name"));
+                                            map.put("price", Integer.toString(intent.getExtras().getInt("price")));
+
+                                            final MyPageService myPageService = MyPageService.retrofit.create(MyPageService.class);
+                                            Call<ResponseBody> call = myPageService.saveBeverage(user.getCookie(), map);
+                                            call.enqueue(new Callback<ResponseBody>() {
+                                                @Override
+                                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                    String res = "";
+                                                    try {
+                                                        res = response.body().string();
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
+
+                                                    if(res.equals("0")){
+                                                        Toast myToast = Toast.makeText(getApplicationContext(), "이미 등록한 상품입니다.", Toast.LENGTH_SHORT);
+                                                        myToast.show();
+                                                    }else  if(res.equals("1")){
+                                                        Toast myToast = Toast.makeText(getApplicationContext(), "등록되었습니다.", Toast.LENGTH_SHORT);
+                                                        myToast.show();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                        adb.create().show();
+                    }
+
+                } else {
+                    AlertDialog.Builder abNotLogin = new AlertDialog.Builder(PurchaseActivity.this);
+                    abNotLogin
+                            .setMessage("로그인이 필요한 서비스입니다.")
+                            .setPositiveButton("로그인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("회원가입", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    startActivity(intent);
+                                }
+                            });
+                    adNotLogin = abNotLogin.create();
+                    adNotLogin.show();
+                }
+
+            }
+        });
+    }
 
 }
