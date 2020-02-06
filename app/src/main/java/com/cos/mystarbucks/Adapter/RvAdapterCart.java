@@ -1,20 +1,28 @@
 package com.cos.mystarbucks.Adapter;
 
 import android.app.Activity;
-import android.util.Log;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cos.mystarbucks.CardActivity;
+import com.cos.mystarbucks.MainActivity;
+import com.cos.mystarbucks.MyPageActivity;
 import com.cos.mystarbucks.R;
 import com.cos.mystarbucks.model.CartDTO;
-import com.cos.mystarbucks.service.CardService;
+import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.service.SirenService;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -29,10 +37,13 @@ import retrofit2.Response;
 
 public class RvAdapterCart extends RecyclerView.Adapter<RvAdapterCart.ViewHolder> {
     private DecimalFormat formatter;
-    private TextView tvAllCount, tvAllPrice;
+    private TextView tvAllCount, tvAllPrice, tvNoCart, tvNotLoginCart;
+    private Button btnCartPurchase;
     private Activity act;
     private int allCount =0, allPrice=0;
+    User user = User.getInstance();
 
+    private AlertDialog adNotExistCard, adNotPoint, adSuccess, adQuestion;
 
     private List<CartDTO.Cart> carts = new ArrayList<>();
 
@@ -59,7 +70,6 @@ public class RvAdapterCart extends RecyclerView.Adapter<RvAdapterCart.ViewHolder
             btnDecrease = itemView.findViewById(R.id.btn_cart_minus);
             btnDelete = itemView.findViewById(R.id.btn_cart_delete);
             tvCount = itemView.findViewById(R.id.tv_cart_count);
-
 
             tvCartName = itemView.findViewById(R.id.tv_cart_name);
             tvCartPrice = itemView.findViewById(R.id.tv_cart_price);
@@ -195,10 +205,6 @@ public class RvAdapterCart extends RecyclerView.Adapter<RvAdapterCart.ViewHolder
 
                             }
                         });
-
-
-
-
                         break;
                 }
             }
@@ -211,16 +217,160 @@ public class RvAdapterCart extends RecyclerView.Adapter<RvAdapterCart.ViewHolder
 
     }
 
-    public void addItems(List<CartDTO.Cart> cart, TextView tvAllCount, TextView tvAllPrice){
+    public void addItems(List<CartDTO.Cart> cart, final TextView tvAllCount, TextView tvAllPrice, Button btnCartPurchase, TextView tvNoCart, TextView tvNotLoginCart){
+
         formatter = new DecimalFormat("###,###");
         this.carts = cart;
         this.tvAllCount = tvAllCount;
         this.tvAllPrice = tvAllPrice;
+        this.btnCartPurchase = btnCartPurchase;
+        this.tvNoCart = tvNoCart;
+        this.tvNotLoginCart = tvNotLoginCart;
+        //장바구니 진입 시 로그인 유무 및 물품 있어야 표시하게 해주는 것
+        if(user.getId()!=0){
+            tvNotLoginCart.setVisibility(View.GONE);
+            if(carts.size()>0){
+                tvNoCart.setVisibility(View.GONE);
+            }
+        }else{
+            if(carts.size()>0){
+                tvNoCart.setVisibility(View.GONE);
+            }
+        }
+
+        //장바구니 진입 시 전체 개수 세팅
         tvAllCount.setText("총 "+carts.size()+" 개");
+        //장바구니 진입 시 전체 가격 세팅
         for(int i = 0; i < carts.size(); i++) {
             allPrice = allPrice+carts.get(i).getPrice();
             tvAllPrice.setText(formatter.format(allPrice)+" 원");
         }
+        //장바구니에서 구입버튼 클릭 시
+        btnCartPurchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(carts.size()>0){
+                    AlertDialog.Builder abQuestion = new AlertDialog.Builder(act);
+                    abQuestion
+                            .setMessage("사이렌 오더 이용 시 주문을 완료한 후에는\n일체의 주문 변경 또는 취소가 불가합니다.")
+                            .setCancelable(false)
+                            .setPositiveButton("아니요", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .setNegativeButton("예", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    JsonObject jsonObject = new JsonObject();
+                                    JsonArray trades = new JsonArray();
+                                    for (int i =0; i<carts.size(); i++){
+                                        JsonObject trade = new JsonObject();
+                                        trade.addProperty("id",carts.get(i).getId());
+                                        trade.addProperty("userId",user.getId());
+                                        trade.addProperty("name",carts.get(i).getName());
+                                        trade.addProperty("price",carts.get(i).getPrice());
+                                        trade.addProperty("amount",carts.get(i).getTempCount()+1);
+                                        trades.add(trade);
+                                    }
+                                    jsonObject.add("trade", trades);
+
+
+                                    final SirenService sirenService = SirenService.retrofit.create(SirenService.class);
+                                    Call<ResponseBody> call = sirenService.orderCart(jsonObject);
+                                    call.enqueue(new Callback<ResponseBody>() {
+                                        @Override
+                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                            String res = null;
+                                            try {
+                                                res = response.body().string();
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            if (res.equals("noCard")) {
+                                                //카드가 없는 경우
+                                                AlertDialog.Builder abNotExistCard = new AlertDialog.Builder(act);
+                                                abNotExistCard
+                                                        .setMessage("카드를 먼저 등록해주시기 바랍니다.")
+                                                        .setCancelable(false)
+                                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                            }
+                                                        })
+                                                        .setNegativeButton("등록", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                Intent intent = new Intent(act.getApplicationContext(), CardActivity.class);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                                act.startActivity(intent);
+                                                            }
+                                                        });
+                                                adNotExistCard = abNotExistCard.create();
+                                                adNotExistCard.show();
+                                            } else if (res.equals("noPoint")) {
+                                                //포인트가 모자란 경우
+                                                AlertDialog.Builder abNotPoint = new AlertDialog.Builder(act);
+                                                abNotPoint
+                                                        .setMessage("카드 잔액이 부족합니다.")
+                                                        .setCancelable(false)
+                                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                            }
+                                                        })
+                                                        .setNegativeButton("충전", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                Intent intent = new Intent(act.getApplicationContext(), MyPageActivity.class);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                                act.startActivity(intent);
+                                                            }
+                                                        });
+                                                adNotPoint = abNotPoint.create();
+                                                adNotPoint.show();
+                                            } else {
+                                                //구매성공
+                                                AlertDialog.Builder abSuccess = new AlertDialog.Builder(act);
+                                                abSuccess
+                                                        .setMessage("구매완료.\n가까운 매장에서 수령해주시기 바랍니다.")
+                                                        .setCancelable(false)
+                                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                Intent intent = new Intent(act.getApplicationContext(), MainActivity.class);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                                act.startActivity(intent);
+                                                            }
+                                                        });
+                                                adSuccess = abSuccess.create();
+                                                adSuccess.show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                        }
+                                    });
+
+                                }
+                            });
+                    adQuestion = abQuestion.create();
+                    adQuestion.show();
+                }else{
+                    Toast toast = Toast.makeText(act.getApplicationContext(), "등록된 상품이 없습니다.", Toast.LENGTH_LONG); toast.show();
+                }
+
+
+
+            }
+        });
     }
 
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.

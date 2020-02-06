@@ -5,10 +5,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.cos.mystarbucks.Adapter.RvAdapterCart;
@@ -27,7 +29,9 @@ public class CartActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private TextView tvAllCount, tvAllPrice;
+    private TextView tvAllCount, tvAllPrice, tvNoCart, tvNotLoginCart;
+    private Button btnCartPurchase;
+
 
 
 
@@ -51,6 +55,9 @@ public class CartActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarBack);
         tvAllCount = findViewById(R.id.tv_cart_allcount);
         tvAllPrice = findViewById(R.id.tv_cart_allprice);
+        tvNoCart = findViewById(R.id.tv_no_cart);
+        tvNotLoginCart = findViewById(R.id.tv_not_login_cart);
+        btnCartPurchase = findViewById(R.id.btn_cart_purchase);
     }
 
     private void toolbarSetting() {
@@ -105,7 +112,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<CartDTO> call, Response<CartDTO> response) {
                 final CartDTO cartDTO = response.body();
-                Adapter.addItems(cartDTO.getCarts(), tvAllCount, tvAllPrice);
+                Adapter.addItems(cartDTO.getCarts(), tvAllCount, tvAllPrice, btnCartPurchase, tvNoCart, tvNotLoginCart);
                 recyclerView.setAdapter(Adapter);
             }
 

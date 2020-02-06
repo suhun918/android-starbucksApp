@@ -10,6 +10,20 @@
 
     <include layout="@layout/toolbar_back"/>
 
+    <TextView
+        android:id="@+id/tv_not_login_cart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="로그인이 필요한 서비스입니다."/>
+
+
+    <TextView
+        android:id="@+id/tv_no_cart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="등록된 상품이 없습니다." />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_cart"
