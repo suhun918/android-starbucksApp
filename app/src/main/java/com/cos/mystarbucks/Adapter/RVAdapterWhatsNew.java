@@ -13,19 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cos.mystarbucks.R;
 import com.cos.mystarbucks.WNDetailActivity;
-import com.cos.mystarbucks.WhatsNewActivity;
 import com.cos.mystarbucks.model.BoardDTO;
-import com.cos.mystarbucks.util.Localhost;
 
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
 public class RVAdapterWhatsNew extends RecyclerView.Adapter<RVAdapterWhatsNew.ViewHolder> {
     List<BoardDTO.Board> boards = new ArrayList<>();
+    SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd\nHH : mm");
     Activity actWhat;
 
     public RVAdapterWhatsNew(Activity actWhat) {
@@ -62,7 +60,7 @@ public class RVAdapterWhatsNew extends RecyclerView.Adapter<RVAdapterWhatsNew.Vi
 
             tvBoardId.setText(boards.getId()+"");
             tvBoardTitle.setText(boards.getTitle());
-            tvBoardCreateDate.setText(boards.getCreateDate().toString().replaceAll("\\.\\d+", ""));
+            tvBoardCreateDate.setText(sFormat.format(boards.getCreateDate()));
         }
     }
 
@@ -75,6 +73,7 @@ public class RVAdapterWhatsNew extends RecyclerView.Adapter<RVAdapterWhatsNew.Vi
 
         this.boards = board;
     }
+
 
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
     @NonNull

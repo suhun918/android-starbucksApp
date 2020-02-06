@@ -1,12 +1,17 @@
 package com.cos.mystarbucks;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -20,6 +25,8 @@ import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.service.WhatsNewService;
 import com.cos.mystarbucks.util.NavigationFactory;
 import com.google.android.material.navigation.NavigationView;
+
+import java.sql.Timestamp;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +46,7 @@ public class WhatsNewActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private RVAdapterWhatsNew adapter = new RVAdapterWhatsNew(this);
 
 
     @Override
@@ -85,11 +93,32 @@ public class WhatsNewActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                // newState = 스크롤이 움직이기 시작할 때 : 1 / 화면에서 손 땔 때 : 0, / 스크롤 움직이다가 끝 부분(위, 아래)에 걸려서 멈출 때 : 2
+//                super.onScrollStateChanged(recyclerView, newState);
+//
+//                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+//                    int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+//                    int itemTotalCount = recyclerView.getAdapter().getItemCount() - 1;
+//
+//                    if (lastVisibleItemPosition == itemTotalCount) {
+//                        BoardDTO.Board asdf = new BoardDTO().new Board();
+//                        asdf.setTitle((lastVisibleItemPosition + 1) + "");
+//                        asdf.setCreateDate(new Timestamp(10000));
+//                        adapter.addItem(asdf);
+//                        adapter.notifyDataSetChanged();
+//                    }
+//                }
+//            }
+//
+//        });
     }
 
     private void rvDataSetting(){
-        final RVAdapterWhatsNew Adapter = new RVAdapterWhatsNew(this);
+//        final RVAdapterWhatsNew Adapter = new RVAdapterWhatsNew(this);
 
         final WhatsNewService whatsNewService = WhatsNewService.retrofit.create(WhatsNewService.class);
         Call<BoardDTO> call = whatsNewService.repoContributors();
@@ -99,8 +128,8 @@ public class WhatsNewActivity extends AppCompatActivity {
                                    Response<BoardDTO> response) {
 
                 final BoardDTO boardDTO = response.body();
-                Adapter.addItems(boardDTO.getBoards());
-                recyclerView.setAdapter(Adapter);
+                adapter.addItems(boardDTO.getBoards());
+                recyclerView.setAdapter(adapter);
 
             }
             @Override

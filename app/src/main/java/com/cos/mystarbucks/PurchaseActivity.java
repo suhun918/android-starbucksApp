@@ -41,7 +41,7 @@ public class PurchaseActivity extends AppCompatActivity {
     private DecimalFormat formatter;
 
     private User user = User.getInstance();
-    private AlertDialog adNotExistCard, adNotPoint, adSuccess, adNotLogin, adQuestion, adExistProduct;
+    private AlertDialog.Builder alertBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +124,6 @@ public class PurchaseActivity extends AppCompatActivity {
         tvCount = findViewById(R.id.tv_quantity);
         tvCount.setText(count + "");
 
-
         btnIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,8 +154,8 @@ public class PurchaseActivity extends AppCompatActivity {
                 if (user.getId() != 0) {
                     Intent intent = getIntent();
                     name = intent.getExtras().getString("name");
-                    AlertDialog.Builder abQuestion = new AlertDialog.Builder(PurchaseActivity.this);
-                    abQuestion
+                    alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                    alertBuilder
                             .setMessage(name+"을(를) 구매하시겠습니까?")
                             .setCancelable(false)
                             .setPositiveButton("아니요", new DialogInterface.OnClickListener() {
@@ -192,8 +191,8 @@ public class PurchaseActivity extends AppCompatActivity {
 
                                             if (res.equals("noCard")) {
                                                 //카드가 없는 경우
-                                                AlertDialog.Builder abNotExistCard = new AlertDialog.Builder(PurchaseActivity.this);
-                                                abNotExistCard
+                                                alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                                                alertBuilder
                                                         .setMessage("카드를 먼저 등록해주시기 바랍니다.")
                                                         .setCancelable(false)
                                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -210,12 +209,11 @@ public class PurchaseActivity extends AppCompatActivity {
                                                                 startActivity(intent);
                                                             }
                                                         });
-                                                adNotExistCard = abNotExistCard.create();
-                                                adNotExistCard.show();
+                                                alertBuilder.create().show();
                                             } else if (res.equals("noPoint")) {
                                                 //포인트가 모자란 경우
-                                                AlertDialog.Builder abNotPoint = new AlertDialog.Builder(PurchaseActivity.this);
-                                                abNotPoint
+                                                alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                                                alertBuilder
                                                         .setMessage("카드 잔액이 부족합니다.")
                                                         .setCancelable(false)
                                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -232,12 +230,11 @@ public class PurchaseActivity extends AppCompatActivity {
                                                                 startActivity(intent);
                                                             }
                                                         });
-                                                adNotPoint = abNotPoint.create();
-                                                adNotPoint.show();
+                                                alertBuilder.create().show();
                                             } else {
                                                 //구매성공
-                                                AlertDialog.Builder abSuccess = new AlertDialog.Builder(PurchaseActivity.this);
-                                                abSuccess
+                                                alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                                                alertBuilder
                                                         .setMessage("구매완료.\n가까운 매장에서 수령해주시기 바랍니다.")
                                                         .setCancelable(false)
                                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -249,8 +246,7 @@ public class PurchaseActivity extends AppCompatActivity {
                                                                 startActivity(intent);
                                                             }
                                                         });
-                                                adSuccess = abSuccess.create();
-                                                adSuccess.show();
+                                                alertBuilder.create().show();
                                             }
                                         }
 
@@ -261,13 +257,12 @@ public class PurchaseActivity extends AppCompatActivity {
                                     });
                                 }
                             });
-                    adQuestion = abQuestion.create();
-                    adQuestion.show();
+                    alertBuilder.create().show();
 
 
                 } else {
-                    AlertDialog.Builder abNotLogin = new AlertDialog.Builder(PurchaseActivity.this);
-                    abNotLogin
+                    alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                    alertBuilder
                             .setMessage("로그인이 필요한 서비스입니다.")
                             .setPositiveButton("로그인", new DialogInterface.OnClickListener() {
                                 @Override
@@ -287,8 +282,7 @@ public class PurchaseActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
-                    adNotLogin = abNotLogin.create();
-                    adNotLogin.show();
+                    alertBuilder.create().show();
 
                 }
 
@@ -303,8 +297,8 @@ public class PurchaseActivity extends AppCompatActivity {
                 if (user.getId() != 0) {
                     Intent intent = getIntent();
                     name = intent.getExtras().getString("name");
-                    AlertDialog.Builder abQuestion = new AlertDialog.Builder(PurchaseActivity.this);
-                    abQuestion
+                    alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                    alertBuilder
                             .setMessage(name+"을(를) 장바구니에 추가하시겠습니까?")
                             .setCancelable(false)
                             .setPositiveButton("아니요", new DialogInterface.OnClickListener() {
@@ -315,7 +309,6 @@ public class PurchaseActivity extends AppCompatActivity {
                             .setNegativeButton("예", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
 
                                     Map cart = new HashMap();
                                     cart.put("userId", user.getId() + "");
@@ -339,8 +332,8 @@ public class PurchaseActivity extends AppCompatActivity {
                                                 //이미 해당물품이 장바구니에 있는 경우
                                                 Intent intent = getIntent();
                                                 name = intent.getExtras().getString("name");
-                                                AlertDialog.Builder abExistCart = new AlertDialog.Builder(PurchaseActivity.this);
-                                                abExistCart
+                                                alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                                                alertBuilder
                                                         .setMessage(name+"은(는) 이미 장바구니에 있는 품목입니다.")
                                                         .setCancelable(false)
                                                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
@@ -348,14 +341,13 @@ public class PurchaseActivity extends AppCompatActivity {
                                                             public void onClick(DialogInterface dialog, int which) {
                                                             }
                                                         });
-                                                adExistProduct = abExistCart.create();
-                                                adExistProduct.show();
+                                                alertBuilder.create().show();
                                             } else if(res.equals("cartSuccess")) {
                                                 //담기 성공
                                                 Intent intent = getIntent();
                                                 name = intent.getExtras().getString("name");
-                                                AlertDialog.Builder absuccessCart = new AlertDialog.Builder(PurchaseActivity.this);
-                                                absuccessCart
+                                                alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                                                alertBuilder
                                                         .setMessage(name+"이(가) 장바구니에 추가 됐습니다.")
                                                         .setCancelable(false)
                                                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
@@ -364,9 +356,7 @@ public class PurchaseActivity extends AppCompatActivity {
 
                                                             }
                                                         });
-
-                                                adNotPoint = absuccessCart.create();
-                                                adNotPoint.show();
+                                                alertBuilder.create().show();
                                             }
                                         }
 
@@ -377,12 +367,11 @@ public class PurchaseActivity extends AppCompatActivity {
                                     });
                                 }
                             });
-                    adQuestion = abQuestion.create();
-                    adQuestion.show();
+                    alertBuilder.create().show();
 
                 } else {
-                    AlertDialog.Builder abNotLogin = new AlertDialog.Builder(PurchaseActivity.this);
-                    abNotLogin
+                    alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                    alertBuilder
                             .setMessage("로그인이 필요한 서비스입니다.")
                             .setPositiveButton("로그인", new DialogInterface.OnClickListener() {
                                 @Override
@@ -402,8 +391,7 @@ public class PurchaseActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
-                    adNotLogin = abNotLogin.create();
-                    adNotLogin.show();
+                    alertBuilder.create().show();
                 }
             }
         });
@@ -428,9 +416,8 @@ public class PurchaseActivity extends AppCompatActivity {
                         myToast.show();
 
                     }else{
-
-                        AlertDialog.Builder adb = new AlertDialog.Builder(PurchaseActivity.this);
-                        adb
+                        alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                        alertBuilder
                                 .setMessage("나만의 메뉴에 등록하시겠습니까?")
                                 .setPositiveButton("등록", new DialogInterface.OnClickListener() {
                                     @Override
@@ -503,12 +490,12 @@ public class PurchaseActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-                        adb.create().show();
+                        alertBuilder.create().show();
                     }
 
                 } else {
-                    AlertDialog.Builder abNotLogin = new AlertDialog.Builder(PurchaseActivity.this);
-                    abNotLogin
+                    alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                    alertBuilder
                             .setMessage("로그인이 필요한 서비스입니다.")
                             .setPositiveButton("로그인", new DialogInterface.OnClickListener() {
                                 @Override
@@ -528,8 +515,7 @@ public class PurchaseActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
-                    adNotLogin = abNotLogin.create();
-                    adNotLogin.show();
+                    alertBuilder.create().show();
                 }
 
             }
