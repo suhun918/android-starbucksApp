@@ -7,10 +7,5 @@
         android:icon="@drawable/ic_add"
         android:title="Add"
         app:showAsAction="always"/>
-    <item
-        android:id="@+id/action_cart"
-        android:icon="@drawable/ic_cart"
-        android:title="Cart"
-        app:showAsAction="always"/>
 
 </menu>

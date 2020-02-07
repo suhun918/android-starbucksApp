@@ -21,10 +21,6 @@ public interface MyPageService {
     Call<MyPageDTO> repoContributors(@Header("Cookie") String cookie);
 
     @FormUrlEncoded
-    @POST("/android/mypage/recharge")
-    Call<ResponseBody> recharge(@Header("Cookie") String cookie, @Field("point") int point);
-
-    @FormUrlEncoded
     @POST("/android/mypage/delete_card")
     Call<ResponseBody> deleteCard(@Header("Cookie") String cookie, @Field("id") int id);
 
