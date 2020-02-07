@@ -24,10 +24,10 @@ import java.util.List;
 public class RVAdapterWhatsNew extends RecyclerView.Adapter<RVAdapterWhatsNew.ViewHolder> {
     List<BoardDTO.Board> boards = new ArrayList<>();
     SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd\nHH : mm");
-    Activity actWhat;
+    Activity activity;
 
-    public RVAdapterWhatsNew(Activity actWhat) {
-        this.actWhat = actWhat;
+    public RVAdapterWhatsNew(Activity activity) {
+        this.activity = activity;
     }
 
 
@@ -43,9 +43,9 @@ public class RVAdapterWhatsNew extends RecyclerView.Adapter<RVAdapterWhatsNew.Vi
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
                         int id = boards.get(pos).getId();
-                        Intent what = new Intent(actWhat, WNDetailActivity.class);
-                        what.putExtra("id",id); /*송신*/
-                        actWhat.startActivity(what);
+                        Intent intent = new Intent(activity, WNDetailActivity.class);
+                        intent.putExtra("id",id); /*송신*/
+                        activity.startActivity(intent);
                     }
                 }
             });
@@ -54,24 +54,21 @@ public class RVAdapterWhatsNew extends RecyclerView.Adapter<RVAdapterWhatsNew.Vi
             tvBoardId = itemView.findViewById(R.id.tv_what_id);
             tvBoardTitle = itemView.findViewById(R.id.tv_what_title);
             tvBoardCreateDate = itemView.findViewById(R.id.tv_what_createdate);
-
         }
-        public void setItem(BoardDTO.Board boards){
 
+        public void setItem(BoardDTO.Board boards){
             tvBoardId.setText(boards.getId()+"");
             tvBoardTitle.setText(boards.getTitle());
             tvBoardCreateDate.setText(sFormat.format(boards.getCreateDate()));
         }
     }
 
-    public void addItem(BoardDTO.Board board){
-
-        boards.add(board);
+    public void addItem(List<BoardDTO.Board> board){
+        boards.addAll(board);
     }
 
-    public void addItems(List<BoardDTO.Board> board){
-
-        this.boards = board;
+    public void addItems(List<BoardDTO.Board> boards){
+        this.boards = boards;
     }
 
 
@@ -94,9 +91,7 @@ public class RVAdapterWhatsNew extends RecyclerView.Adapter<RVAdapterWhatsNew.Vi
     // getItemCount() - 전체 데이터 갯수 리턴.
     @Override
     public int getItemCount() {
-
         return boards.size();
-
     }
 }
 

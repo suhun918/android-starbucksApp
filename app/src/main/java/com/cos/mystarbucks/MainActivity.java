@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         mainWhatsNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), WhatsNewActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MyPageActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);

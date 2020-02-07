@@ -204,7 +204,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="What's New"
+                    android:text="My Page"
                     android:textColor="@color/colorWhite"
                     android:textSize="20sp" />
             </LinearLayout>

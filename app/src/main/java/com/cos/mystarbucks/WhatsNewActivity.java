@@ -93,45 +93,66 @@ public class WhatsNewActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                // newState = 스크롤이 움직이기 시작할 때 : 1 / 화면에서 손 땔 때 : 0, / 스크롤 움직이다가 끝 부분(위, 아래)에 걸려서 멈출 때 : 2
-//                super.onScrollStateChanged(recyclerView, newState);
-//
-//                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-//                    int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-//                    int itemTotalCount = recyclerView.getAdapter().getItemCount() - 1;
-//
-//                    if (lastVisibleItemPosition == itemTotalCount) {
-//                        BoardDTO.Board asdf = new BoardDTO().new Board();
-//                        asdf.setTitle((lastVisibleItemPosition + 1) + "");
-//                        asdf.setCreateDate(new Timestamp(10000));
-//                        adapter.addItem(asdf);
-//                        adapter.notifyDataSetChanged();
-//                    }
-//                }
-//            }
-//
-//        });
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                // newState = 0 (화면에서 손 땔 때)
+                //            1 (스크롤이 움직이기 시작할 때)
+                //            2 (스크롤이 움직이다가 끝 부분(위쪽, 아래쪽)에 걸려서 멈출 때)
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) { // newState == 0
+                    int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                    int itemTotalCount = recyclerView.getAdapter().getItemCount() - 1;
+
+                    if (lastVisibleItemPosition == itemTotalCount) {
+
+                        // ProgressDialog 설정
+                        final ProgressDialog progressDialog;
+                        progressDialog = new ProgressDialog(WhatsNewActivity.this);
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        progressDialog.setMessage("");
+                        progressDialog.setCancelable(false);
+                        // ProgressDialog 띄우기
+                        progressDialog.show();
+
+                        WhatsNewService whatsNewService = WhatsNewService.retrofit.create(WhatsNewService.class);
+                        Call<BoardDTO> call = whatsNewService.nextBoard(lastVisibleItemPosition);
+                        call.enqueue(new Callback<BoardDTO>() {
+                            @Override
+                            public void onResponse(Call<BoardDTO> call, Response<BoardDTO> response) {
+                                BoardDTO boardDTO = response.body();
+                                adapter.addItem(boardDTO.getBoards());
+                                adapter.notifyDataSetChanged();
+
+                                progressDialog.dismiss();
+                            }
+
+                            @Override
+                            public void onFailure(Call<BoardDTO> call, Throwable t) {
+
+                            }
+                        });
+
+                    }
+                }
+            }
+
+        });
     }
 
     private void rvDataSetting(){
-//        final RVAdapterWhatsNew Adapter = new RVAdapterWhatsNew(this);
-
-        final WhatsNewService whatsNewService = WhatsNewService.retrofit.create(WhatsNewService.class);
+        WhatsNewService whatsNewService = WhatsNewService.retrofit.create(WhatsNewService.class);
         Call<BoardDTO> call = whatsNewService.repoContributors();
         call.enqueue(new Callback<BoardDTO>() {
             @Override
-            public void onResponse(Call<BoardDTO> call,
-                                   Response<BoardDTO> response) {
-
-                final BoardDTO boardDTO = response.body();
+            public void onResponse(Call<BoardDTO> call, Response<BoardDTO> response) {
+                BoardDTO boardDTO = response.body();
                 adapter.addItems(boardDTO.getBoards());
                 recyclerView.setAdapter(adapter);
-
             }
+
             @Override
             public void onFailure(Call<BoardDTO> call, Throwable t) {
             }
