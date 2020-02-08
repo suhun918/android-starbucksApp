@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cos.mystarbucks.Adapter.RvAdapterSirenBeverage;
@@ -33,14 +34,14 @@ import retrofit2.Response;
 public class SirenOrderActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageView menuIcon;
-
+    private LinearLayout allMenu, myMenu, history;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
     private View header;
     private Button btnLogin;
 
-    private TextView allMenu, myMenu, history, toolbarText;
+    private TextView toolbarText;
     private RecyclerView fRecyclerView, bRecyclerView;
     private RecyclerView.LayoutManager flayoutManager, blayoutManager;
 
@@ -86,7 +87,7 @@ public class SirenOrderActivity extends AppCompatActivity {
     }
 
     private void IconIntent(){
-        allMenu = findViewById(R.id.tv_SirenAllMenu);
+        allMenu = findViewById(R.id.ll_allMenu);
         allMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +98,7 @@ public class SirenOrderActivity extends AppCompatActivity {
             }
         });
 
-        myMenu = findViewById(R.id.tv_SirenMyMenu);
+        myMenu = findViewById(R.id.ll_myMenu);
         myMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +110,7 @@ public class SirenOrderActivity extends AppCompatActivity {
             }
         });
 
-        history = findViewById(R.id.tv_SirenHistory);
+        history = findViewById(R.id.ll_history);
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

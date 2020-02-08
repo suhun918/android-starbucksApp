@@ -24,16 +24,13 @@
             android:orientation="vertical"
             android:background="@color/colorSirenOrderBackground">
 
-            <TextView
-                android:id="@+id/textView2"
+            <ImageView
+                android:id="@+id/iv_siren"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="30"
-                android:background="#1f1f1f"
-                android:gravity="center"
-                android:text="안녕하세요. 스타벅스입니다."
-                android:textColor="@color/colorWelcome"
-                 />
+                android:background="@drawable/sirenorderimage"
+                android:gravity="center"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,14 +43,31 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
 
+            <LinearLayout
+                android:id="@+id/ll_allMenu"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:background="@drawable/siren_allmenu"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
                 <TextView
                     android:id="@+id/tv_SirenAllMenu"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="10"
+                    android:layout_weight="20"
                     android:gravity="center"
                     android:text="전체 메뉴"
+                    android:layout_marginStart="-15dp"
                     android:textColor="@color/colorBlack" />
+            </LinearLayout>
+
 
                 <View
                     android:id="@+id/view3"
@@ -63,15 +77,31 @@
                     android:layout_marginTop="13dp"
                     android:layout_marginBottom="13dp"
                     android:background="@color/colorSirenOrderBackLine"/>
-
-                <TextView
-                    android:id="@+id/tv_SirenMyMenu"
+                <LinearLayout
+                    android:id="@+id/ll_myMenu"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10"
-                    android:gravity="center"
-                    android:text="나만의 메뉴"
-                    android:textColor="@color/colorBlack" />
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/siren_mymenu"/>
+                    <TextView
+                        android:id="@+id/tv_SirenMyMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20"
+                        android:gravity="center"
+                        android:text="나만의 메뉴"
+                        android:layout_marginStart="-10dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
 
                 <View
                     android:id="@+id/view20"
@@ -81,15 +111,31 @@
                     android:layout_marginTop="13dp"
                     android:layout_marginBottom="13dp"
                     android:background="@color/colorSirenOrderBackLine"/>
-
-                <TextView
-                    android:id="@+id/tv_SirenHistory"
+                <LinearLayout
+                    android:id="@+id/ll_history"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10"
-                    android:gravity="center"
-                    android:text="히스토리"
-                    android:textColor="@color/colorBlack" />
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/siren_history"/>
+                    <TextView
+                        android:id="@+id/tv_SirenHistory"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20"
+                        android:gravity="center"
+                        android:text="히스토리"
+                        android:layout_marginStart="-15dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 
