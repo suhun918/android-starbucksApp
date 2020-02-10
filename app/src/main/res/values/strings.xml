@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">StarBucks</string>
     <string name="kakao_app_key">eac0374d60a10556ed2e47b5c13aec54</string>
+    <string name="kakao_rest_api_key">KakaoAK 667bc5d2d523d75df0ce851ed17c6560</string>
 </resources>

@@ -176,7 +176,7 @@ public class PurchaseActivity extends AppCompatActivity {
                                     trade.put("price", price + "");
                                     trade.put("amount", tvCount.getText() + "");
 
-                                    final SirenService sirenService = SirenService.retrofit.create(SirenService.class);
+                                    SirenService sirenService = SirenService.retrofit.create(SirenService.class);
                                     Call<ResponseBody> call = sirenService.order(trade);
 
                                     call.enqueue(new Callback<ResponseBody>() {
@@ -188,23 +188,24 @@ public class PurchaseActivity extends AppCompatActivity {
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
+                                            final String restPoint = res;
 
                                             if (res.equals("noCard")) {
-                                                //카드가 없는 경우
-                                                alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
-                                                alertBuilder
-                                                        .setMessage("카드를 먼저 등록해주시기 바랍니다.")
-                                                        .setCancelable(false)
-                                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
-                                                            }
-                                                        })
-                                                        .setNegativeButton("등록", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
-                                                                Intent intent = new Intent(getApplicationContext(), CardActivity.class);
-                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                    //카드가 없는 경우
+                                                                    alertBuilder = new AlertDialog.Builder(PurchaseActivity.this);
+                                                                    alertBuilder
+                                                                            .setMessage("카드를 먼저 등록해주시기 바랍니다.")
+                                                                            .setCancelable(false)
+                                                                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                                                @Override
+                                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                                }
+                                                                            })
+                                                                            .setNegativeButton("등록", new DialogInterface.OnClickListener() {
+                                                                                @Override
+                                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                                    Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                                                 startActivity(intent);
                                                             }
@@ -240,7 +241,8 @@ public class PurchaseActivity extends AppCompatActivity {
                                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
-                                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                                Intent intent = new Intent(getApplicationContext(), PurchaseDoneActivity.class);
+                                                                intent.putExtra("restPoint", Integer.parseInt(restPoint));
                                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                                                 startActivity(intent);

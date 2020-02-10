@@ -24,6 +24,7 @@ import com.cos.mystarbucks.Adapter.RvAdapterSirenFood;
 import com.cos.mystarbucks.model.SirenDTO;
 import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.service.SirenService;
+import com.cos.mystarbucks.util.CustomDialogLoading;
 import com.cos.mystarbucks.util.NavigationFactory;
 import com.google.android.material.navigation.NavigationView;
 
@@ -140,12 +141,16 @@ public class SirenOrderActivity extends AppCompatActivity {
         final RvAdapterSirenFood fAdapter = new RvAdapterSirenFood(this);
         final RvAdapterSirenBeverage bAdapter = new RvAdapterSirenBeverage(this);
 
-        final SirenService sirenService = SirenService.retrofit.create(SirenService.class);
+        final CustomDialogLoading dialog = new CustomDialogLoading(SirenOrderActivity.this);
+        dialog.show();
+
+        SirenService sirenService = SirenService.retrofit.create(SirenService.class);
         Call<SirenDTO> call = sirenService.repoContributors();
         call.enqueue(new Callback<SirenDTO>() {
             @Override
             public void onResponse(Call<SirenDTO> call,
                                    Response<SirenDTO> response) {
+                dialog.dismiss();
 
                 final SirenDTO sirenDTO = response.body();
                 fAdapter.addItems(sirenDTO.getFoods());
@@ -156,6 +161,7 @@ public class SirenOrderActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<SirenDTO> call, Throwable t) {
+                dialog.dismiss();
             }
         });
 

@@ -6,7 +6,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import com.cos.mystarbucks.model.MyPageDTO;
 import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.service.MyPageService;
+import com.cos.mystarbucks.util.CustomDialogLoading;
 import com.cos.mystarbucks.util.NavigationFactory;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -87,21 +87,15 @@ public class MyPageActivity extends AppCompatActivity {
 
     private void getData(){
 
-        // ProgressDialog 설정
-        final ProgressDialog progressDialog;
-        progressDialog = new ProgressDialog(MyPageActivity.this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("데이터 받아오는 중...");
-        progressDialog.setCancelable(false);
-        // ProgressDialog 띄우기
-        progressDialog.show();
+        final CustomDialogLoading dialog = new CustomDialogLoading(MyPageActivity.this);
+        dialog.show();
 
         final MyPageService myPageService = MyPageService.retrofit.create(MyPageService.class);
         Call<MyPageDTO> call = myPageService.repoContributors(user.getCookie());
         call.enqueue(new Callback<MyPageDTO>() {
             @Override
             public void onResponse(Call<MyPageDTO> call, Response<MyPageDTO> response) {
-                progressDialog.dismiss();
+                dialog.dismiss();
 
                 btnLogin.setText("로그아웃");
                 TextView tv = header.findViewById(R.id.tv_name);
@@ -116,7 +110,7 @@ public class MyPageActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MyPageDTO> call, Throwable t) {
-                progressDialog.dismiss();
+                dialog.dismiss();
 
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

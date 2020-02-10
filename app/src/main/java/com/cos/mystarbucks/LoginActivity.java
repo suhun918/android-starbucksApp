@@ -6,7 +6,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,6 +19,7 @@ import android.widget.Toast;
 
 import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.service.UserService;
+import com.cos.mystarbucks.util.CustomDialogLoading;
 import com.cos.mystarbucks.util.NavigationFactory;
 import com.google.android.material.navigation.NavigationView;
 import com.kakao.auth.Session;
@@ -64,8 +64,6 @@ public class LoginActivity extends AppCompatActivity {
 
         minit();
         setClickEventListener();
-
-
     }
 
     private void navigationSetting(){
@@ -135,14 +133,8 @@ public class LoginActivity extends AppCompatActivity {
                     map.put("username", etUsername.getText().toString());
                     map.put("password", etPassword.getText().toString());
 
-                    // ProgressDialog 설정
-                    final ProgressDialog progressDialog;
-                    progressDialog = new ProgressDialog(LoginActivity.this);
-                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    progressDialog.setMessage("로그인 중입니다.");
-                    progressDialog.setCancelable(false);
-                    // ProgressDialog 띄우기
-                    progressDialog.show();
+                    final CustomDialogLoading dialog = new CustomDialogLoading(LoginActivity.this);
+                    dialog.show();
 
                     final UserService userService = UserService.retrofit.create(UserService.class);
                     Call<User> call = userService.login(map);
@@ -150,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<User> call,
                                                Response<User> response) {
-                            progressDialog.dismiss();
+                            dialog.dismiss();
 
                             User u  = response.body();
                             User user = User.getInstance();
@@ -173,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
-                            progressDialog.dismiss();
+                            dialog.dismiss();
 
                             alertBuilder
                                     .setMessage("로그인 정보가 일치하지 않습니다.\n아이디나 비밀번호를 확인 후 다시 입력해 주세요.")

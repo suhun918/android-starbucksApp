@@ -31,10 +31,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 
-
-public class StoreActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener, Runnable{
+public class PurchaseDoneActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener, Runnable {
     private Toolbar toolbar;
+    private TextView textView;
 
     private MapView mapView;
     private MapPoint.GeoCoordinate center = new MapPoint.GeoCoordinate(0,0);
@@ -48,16 +49,21 @@ public class StoreActivity extends AppCompatActivity implements MapView.CurrentL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store);
+        setContentView(R.layout.activity_purchase_done);
 
         toolbarSetting();
         kakaoMap();
+
+        Intent intent = getIntent();
+        textView = findViewById(R.id.tv_purchase_done);
+        DecimalFormat formatter = new DecimalFormat("###,###");
+        textView.setText("구매완료. 가까운 매장에서 수령해주시기 바랍니다.\n"+"현재 카드 잔액 : "+ formatter.format(intent.getExtras().getInt("restPoint")) + " 원");
     }
 
     private void toolbarSetting(){
         toolbar = findViewById(R.id.toolbarBack);
         TextView tv = toolbar.findViewById(R.id.tv_toolbarName);
-        tv.setText("매장 위치");
+        tv.setText("구매 완료");
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
@@ -71,7 +77,6 @@ public class StoreActivity extends AppCompatActivity implements MapView.CurrentL
             case android.R.id.home:{//toolbar의 back키를 눌렀을 때 동작
                 finish();
                 return true;
-
             }
         }
         return super.onOptionsItemSelected(item);
@@ -231,7 +236,7 @@ public class StoreActivity extends AppCompatActivity implements MapView.CurrentL
 
         //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
-        int hasFineLocationPermission = ContextCompat.checkSelfPermission(StoreActivity.this,
+        int hasFineLocationPermission = ContextCompat.checkSelfPermission(PurchaseDoneActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
 
@@ -249,19 +254,19 @@ public class StoreActivity extends AppCompatActivity implements MapView.CurrentL
         } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
 
             // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
-            if (ActivityCompat.shouldShowRequestPermissionRationale(StoreActivity.this, REQUIRED_PERMISSIONS[0])) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(PurchaseDoneActivity.this, REQUIRED_PERMISSIONS[0])) {
 
                 // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
-                Toast.makeText(StoreActivity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(PurchaseDoneActivity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
                 // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                ActivityCompat.requestPermissions(StoreActivity.this, REQUIRED_PERMISSIONS,
+                ActivityCompat.requestPermissions(PurchaseDoneActivity.this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);
 
 
             } else {
                 // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
                 // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                ActivityCompat.requestPermissions(StoreActivity.this, REQUIRED_PERMISSIONS,
+                ActivityCompat.requestPermissions(PurchaseDoneActivity.this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);
             }
 
@@ -272,7 +277,7 @@ public class StoreActivity extends AppCompatActivity implements MapView.CurrentL
     //여기부터는 GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(StoreActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(PurchaseDoneActivity.this);
         builder.setTitle("위치 서비스 비활성화");
         builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.");
         builder.setCancelable(true);
@@ -323,6 +328,5 @@ public class StoreActivity extends AppCompatActivity implements MapView.CurrentL
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 //======================================= GPS 권한 획득 관련 메서드 [끝] =======================================
-
 
 }

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cos.mystarbucks.service.UserService;
+import com.cos.mystarbucks.util.CustomDialogLoading;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -90,19 +90,15 @@ public class JoinActivity extends AppCompatActivity {
                     map.put("email", etEmail.getText().toString());
                     map.put("name", etName.getText().toString());
 
-                    final ProgressDialog progressDialog;
-                    progressDialog = new ProgressDialog(JoinActivity.this);
-                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    progressDialog.setMessage("회원가입 중입니다.");
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
+                    final CustomDialogLoading dialog = new CustomDialogLoading(JoinActivity.this);
+                    dialog.show();
 
                     UserService userService = UserService.retrofit.create(UserService.class);
                     Call<ResponseBody> call = userService.join(map);
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            progressDialog.dismiss();
+                            dialog.dismiss();
 
                             String res = null;
                             try {
@@ -136,7 +132,7 @@ public class JoinActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            progressDialog.dismiss();
+                            dialog.dismiss();
 
                             Toast myToast = Toast.makeText(getApplicationContext(),"서버와 연결할 수 없습니다", Toast.LENGTH_SHORT);
                             myToast.show();

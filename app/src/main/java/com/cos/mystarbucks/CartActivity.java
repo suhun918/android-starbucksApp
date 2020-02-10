@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +16,7 @@ import com.cos.mystarbucks.Adapter.RvAdapterCart;
 import com.cos.mystarbucks.model.CartDTO;
 import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.service.SirenService;
+import com.cos.mystarbucks.util.CustomDialogLoading;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,8 +31,6 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private TextView tvAllCount, tvAllPrice, tvNoCart, tvNotLoginCart;
     private Button btnCartPurchase;
-
-
 
 
     @Override
@@ -67,8 +65,6 @@ public class CartActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);//검정화살표가 나오길래 내가 집어넣는 하얀 화살표
-
-
     }
 
     @Override
@@ -76,6 +72,7 @@ public class CartActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.actionbar_action_add_cart, menu) ;
         return true ;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -92,6 +89,7 @@ public class CartActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item) ;
         }
     }
+
     private void setRecyclerView(){
         layoutManager = new LinearLayoutManager(this);
         recyclerView = findViewById(R.id.rv_cart);
@@ -106,11 +104,16 @@ public class CartActivity extends AppCompatActivity {
         map.put("userId", user.getId()+"");
         final RvAdapterCart Adapter = new RvAdapterCart(this);
 
+        final CustomDialogLoading dialog = new CustomDialogLoading(CartActivity.this);
+        dialog.show();
+
         final SirenService sirenService = SirenService.retrofit.create(SirenService.class);
         Call<CartDTO> call = sirenService.cartrepoContributors(map);
         call.enqueue(new Callback<CartDTO>() {
             @Override
             public void onResponse(Call<CartDTO> call, Response<CartDTO> response) {
+                dialog.dismiss();
+
                 final CartDTO cartDTO = response.body();
                 Adapter.addItems(cartDTO.getCarts(), tvAllCount, tvAllPrice, btnCartPurchase, tvNoCart, tvNotLoginCart);
                 recyclerView.setAdapter(Adapter);
@@ -118,7 +121,7 @@ public class CartActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<CartDTO> call, Throwable t) {
-
+                dialog.dismiss();
             }
         });
     }

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cos.mystarbucks.CardActivity;
 import com.cos.mystarbucks.MainActivity;
 import com.cos.mystarbucks.MyPageActivity;
+import com.cos.mystarbucks.PurchaseDoneActivity;
 import com.cos.mystarbucks.R;
 import com.cos.mystarbucks.model.CartDTO;
 import com.cos.mystarbucks.model.User;
@@ -36,7 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RvAdapterCart extends RecyclerView.Adapter<RvAdapterCart.ViewHolder> {
-    private DecimalFormat formatter;
+    private DecimalFormat formatter = new DecimalFormat("###,###");
     private TextView tvAllCount, tvAllPrice, tvNoCart, tvNotLoginCart;
     private Button btnCartPurchase;
     private Activity act;
@@ -77,7 +78,6 @@ public class RvAdapterCart extends RecyclerView.Adapter<RvAdapterCart.ViewHolder
         }
         public void setItem(CartDTO.Cart carts){
             tvCartName.setText(carts.getName());
-            formatter = new DecimalFormat("###,###");
 
             tvCartPrice.setText(formatter.format(carts.getPrice()*(carts.getTempCount()+1))+" 원");
             tvCount.setText(carts.getTempCount()+1+"");
@@ -219,7 +219,6 @@ public class RvAdapterCart extends RecyclerView.Adapter<RvAdapterCart.ViewHolder
 
     public void addItems(List<CartDTO.Cart> cart, final TextView tvAllCount, TextView tvAllPrice, Button btnCartPurchase, TextView tvNoCart, TextView tvNotLoginCart){
 
-        formatter = new DecimalFormat("###,###");
         this.carts = cart;
         this.tvAllCount = tvAllCount;
         this.tvAllPrice = tvAllPrice;
@@ -288,6 +287,7 @@ public class RvAdapterCart extends RecyclerView.Adapter<RvAdapterCart.ViewHolder
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
+                                            final String restPoint = res;
 
                                             if (res.equals("noCard")) {
                                                 //카드가 없는 경우
@@ -342,7 +342,8 @@ public class RvAdapterCart extends RecyclerView.Adapter<RvAdapterCart.ViewHolder
                                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
-                                                                Intent intent = new Intent(act.getApplicationContext(), MainActivity.class);
+                                                                Intent intent = new Intent(act.getApplicationContext(), PurchaseDoneActivity.class);
+                                                                intent.putExtra("restPoint", Integer.parseInt(restPoint));
                                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                                                 act.startActivity(intent);

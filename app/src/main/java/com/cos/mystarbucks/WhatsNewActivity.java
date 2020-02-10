@@ -1,9 +1,6 @@
 package com.cos.mystarbucks;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
@@ -23,10 +20,9 @@ import com.cos.mystarbucks.Adapter.RVAdapterWhatsNew;
 import com.cos.mystarbucks.model.BoardDTO;
 import com.cos.mystarbucks.model.User;
 import com.cos.mystarbucks.service.WhatsNewService;
+import com.cos.mystarbucks.util.CustomDialogLoading;
 import com.cos.mystarbucks.util.NavigationFactory;
 import com.google.android.material.navigation.NavigationView;
-
-import java.sql.Timestamp;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +37,6 @@ public class WhatsNewActivity extends AppCompatActivity {
 
     private View header;
     private Button btnLogin;
-
 
 
     private RecyclerView recyclerView;
@@ -108,14 +103,8 @@ public class WhatsNewActivity extends AppCompatActivity {
 
                     if (lastVisibleItemPosition == itemTotalCount) {
 
-                        // ProgressDialog 설정
-                        final ProgressDialog progressDialog;
-                        progressDialog = new ProgressDialog(WhatsNewActivity.this);
-                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                        progressDialog.setMessage("");
-                        progressDialog.setCancelable(false);
-                        // ProgressDialog 띄우기
-                        progressDialog.show();
+                        final CustomDialogLoading dialog = new CustomDialogLoading(WhatsNewActivity.this);
+                        dialog.show();
 
                         WhatsNewService whatsNewService = WhatsNewService.retrofit.create(WhatsNewService.class);
                         Call<BoardDTO> call = whatsNewService.nextBoard(lastVisibleItemPosition);
@@ -126,7 +115,7 @@ public class WhatsNewActivity extends AppCompatActivity {
                                 adapter.addItem(boardDTO.getBoards());
                                 adapter.notifyDataSetChanged();
 
-                                progressDialog.dismiss();
+                                dialog.dismiss();
                             }
 
                             @Override
@@ -143,6 +132,9 @@ public class WhatsNewActivity extends AppCompatActivity {
     }
 
     private void rvDataSetting(){
+        final CustomDialogLoading dialog = new CustomDialogLoading(WhatsNewActivity.this);
+        dialog.show();
+
         WhatsNewService whatsNewService = WhatsNewService.retrofit.create(WhatsNewService.class);
         Call<BoardDTO> call = whatsNewService.repoContributors();
         call.enqueue(new Callback<BoardDTO>() {
@@ -151,6 +143,8 @@ public class WhatsNewActivity extends AppCompatActivity {
                 BoardDTO boardDTO = response.body();
                 adapter.addItems(boardDTO.getBoards());
                 recyclerView.setAdapter(adapter);
+
+                dialog.dismiss();
             }
 
             @Override

@@ -2,10 +2,8 @@ package com.cos.mystarbucks;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cos.mystarbucks.service.UserService;
-import com.google.android.material.navigation.NavigationView;
+import com.cos.mystarbucks.util.CustomDialogLoading;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,13 +90,15 @@ public class KJoinActivity extends AppCompatActivity {
                     map.put("provider", "kakao");
                     map.put("providerId", providerId+"");
 
-
+                    final CustomDialogLoading dialog = new CustomDialogLoading(KJoinActivity.this);
+                    dialog.show();
 
                     final UserService userService = UserService.retrofit.create(UserService.class);
                     Call<ResponseBody> call = userService.kakaoJoin(map);
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            dialog.dismiss();
 
                             String res = null;
                             try {
@@ -133,6 +132,7 @@ public class KJoinActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            dialog.dismiss();
 
                             Toast myToast = Toast.makeText(getApplicationContext(),"서버와 연결할 수 없습니다", Toast.LENGTH_SHORT);
                             myToast.show();

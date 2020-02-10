@@ -15,10 +15,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cos.mystarbucks.model.MenuDTO;
 import com.cos.mystarbucks.model.User;
+import com.cos.mystarbucks.service.MenuService;
+import com.cos.mystarbucks.util.CustomDialogLoading;
 import com.cos.mystarbucks.util.NavigationFactory;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MenuActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -35,6 +42,8 @@ public class MenuActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
+    public MenuDTO menuDTO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +52,7 @@ public class MenuActivity extends AppCompatActivity {
         navigationSetting();
         toolbarSetting();
 
-        fragmentViewPager();
+        getData();
     }
 
     private void navigationSetting(){
@@ -89,6 +98,28 @@ public class MenuActivity extends AppCompatActivity {
             default :
                 return super.onOptionsItemSelected(item) ;
         }
+    }
+
+    private void getData(){
+        final CustomDialogLoading dialog = new CustomDialogLoading(MenuActivity.this);
+        dialog.show();
+
+        final MenuService menuService = MenuService.retrofit.create(MenuService.class);
+        Call<MenuDTO> call = menuService.repoContributors();
+        call.enqueue(new Callback<MenuDTO>() {
+            @Override
+            public void onResponse(Call<MenuDTO> call, Response<MenuDTO> response) {
+                dialog.dismiss();
+
+                menuDTO = response.body();
+                fragmentViewPager();
+            }
+
+            @Override
+            public void onFailure(Call<MenuDTO> call, Throwable t) {
+                dialog.dismiss();
+            }
+        });
     }
 
     private void fragmentViewPager(){

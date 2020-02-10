@@ -14,6 +14,7 @@ import com.cos.mystarbucks.MyPageActivity;
 import com.cos.mystarbucks.R;
 import com.cos.mystarbucks.model.MyPageDTO;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,8 @@ import java.util.List;
 
 public class RvAdapterHistory extends RecyclerView.Adapter<RvAdapterHistory.ViewHolder> {
     private List<MyPageDTO.Trade> tradeList = new ArrayList<>();
-    SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd\nHH : mm");
+    private SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd\nHH : mm");
+    private DecimalFormat formatter = new DecimalFormat("###,###");
     private MyPageActivity activity;
 
     public RvAdapterHistory(Activity activity) {
@@ -56,7 +58,7 @@ public class RvAdapterHistory extends RecyclerView.Adapter<RvAdapterHistory.View
 
         public void setItem(MyPageDTO.Trade trade){
             tvName.setText(trade.getName());
-            tvPrice.setText(Integer.toString(trade.getPrice()));
+            tvPrice.setText(formatter.format(trade.getPrice())+" 원");
             tvAmount.setText(Integer.toString(trade.getAmount()));
             tvCreateDate.setText(sFormat.format(trade.getCreateDate()));
         }

@@ -24,7 +24,7 @@ import retrofit2.Response;
 public class FragmentFood extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private Activity actMenu;
+    private MenuActivity actMenu;
     // 내가 실행하는게 아님!!
     // fragment_first.xml 을 메모리에 로딩하고 Activity에 붙여서 return 하면 됨.
     @Nullable
@@ -45,27 +45,14 @@ public class FragmentFood extends Fragment {
         return v;
     }
     public FragmentFood(Activity actMenu) {
-        this.actMenu = actMenu;
+        this.actMenu = (MenuActivity)actMenu;
     }
 
 
     private void rvDataSetting(){
         final RvAdapterMenuFood Adapter = new RvAdapterMenuFood(actMenu);
-
-        final MenuService menuService = MenuService.retrofit.create(MenuService.class);
-        Call<MenuDTO> call = menuService.repoContributors();
-        call.enqueue(new Callback<MenuDTO>() {
-            @Override
-            public void onResponse(Call<MenuDTO> call,
-                                   Response<MenuDTO> response) {
-                MenuDTO menuDTO = response.body();
-                Adapter.addItems(menuDTO.getFoods());
-                recyclerView.setAdapter(Adapter);
-            }
-            @Override
-            public void onFailure(Call<MenuDTO> call, Throwable t) {
-            }
-        });
+        Adapter.addItems(actMenu.menuDTO.getFoods());
+        recyclerView.setAdapter(Adapter);
     }
 
 }
