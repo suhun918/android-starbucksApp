@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:textSize="15dp"/>
 
         <Button
             android:id="@+id/btn_login"
@@ -28,7 +29,7 @@
             android:background="@drawable/btn_login"
             android:text="로그인"
             android:textColor="@color/colorBlack"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
 
     </LinearLayout>

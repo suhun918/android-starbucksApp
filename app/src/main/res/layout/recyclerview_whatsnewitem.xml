@@ -17,21 +17,24 @@
             android:layout_height="80dp"
             android:layout_weight="5"
             android:layout_marginStart="10dp"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:textSize="15dp"/>
         <TextView
             android:id="@+id/tv_what_title"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_weight="20"
             android:textColor="@color/colorBlack"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:textSize="15dp"/>
 
         <TextView
             android:id="@+id/tv_what_createdate"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_weight="10"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textSize="15dp"/>
     </LinearLayout>
     <View
         android:id="@+id/view10"

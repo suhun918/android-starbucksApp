@@ -12,4 +12,12 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <style name="tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">18dp</item>
+    </style>
+
+    <style name="drawer_text">
+        <item name="android:textSize">15dp</item>
+    </style>
+
 </resources>

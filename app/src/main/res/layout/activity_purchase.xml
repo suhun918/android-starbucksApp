@@ -46,7 +46,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="10"
                 android:gravity="bottom"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textColor="@color/colorBlack"
                 android:textAlignment="center"
                 android:background="@color/colorWhite"/>
@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textColor="@color/colorBlack"
                 android:textAlignment="center"
                 android:layout_marginTop="15dp"
@@ -90,6 +90,7 @@
                 android:layout_weight="10"
                 android:layout_height="wrap_content"
                 android:text="-"
+                android:textSize="20dp"
                 android:textColor="@color/colorPurchasePlusMinusTxt"
                 android:background="@color/colorPurchasePlusMinusBtn"/>
             <TextView
@@ -99,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:gravity="center"
                 android:background="@color/colorWhite"/>
             <Button
@@ -108,6 +109,7 @@
                 android:layout_weight="10"
                 android:layout_height="wrap_content"
                 android:text="+"
+                android:textSize="20dp"
                 android:textColor="@color/colorPurchasePlusMinusTxt"
                 android:background="@color/colorPurchasePlusMinusBtn"/>
         </LinearLayout>
@@ -144,7 +146,8 @@
                 android:textColor="@color/colorWhite"
                 android:text="담 기"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"/>
+                android:layout_marginEnd="5dp"
+                android:textSize="15dp"/>
             <Button
                 android:id="@+id/btn_mymenu"
                 android:layout_width="0dp"
@@ -154,7 +157,8 @@
                 android:textColor="@color/colorWhite"
                 android:text="나만의 메뉴"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginEnd="10dp"
+                android:textSize="15dp"/>
         </LinearLayout>
 
         <Button
@@ -166,7 +170,8 @@
             android:text="바로 주문하기"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:textSize="15dp"/>
 
     </LinearLayout>
 

@@ -28,6 +28,7 @@
                 android:background="#1f1f1f"
                 android:gravity="center"
                 android:text="안녕하세요. 스타벅스입니다."
+                android:textSize="12dp"
                 android:textColor="@color/colorWelcome"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +44,7 @@
                 android:background="@drawable/btn_join"
                 android:text="회원가입"
                 android:textColor="@color/colorWhite"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
@@ -54,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +122,7 @@
                         android:gravity="center"
                         android:text="Siren Order"
                         android:textColor="@color/colorWhite"
-                        android:textSize="20sp" />
+                        android:textSize="20dp" />
                 </LinearLayout>
 
                 <View
@@ -157,7 +158,7 @@
                         android:gravity="center"
                         android:text="Card"
                         android:textColor="@color/colorWhite"
-                        android:textSize="20sp" />
+                        android:textSize="20dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -186,7 +187,7 @@
                     android:gravity="center"
                     android:text="Store"
                     android:textColor="@color/colorWhite"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
 
                 <View
                     android:id="@+id/view4"
@@ -206,7 +207,7 @@
                     android:gravity="center"
                     android:text="My Page"
                     android:textColor="@color/colorWhite"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -219,7 +220,8 @@
         android:id="@+id/navigationView"
         android:layout_gravity="start"
         app:headerLayout="@layout/header_layout"
-        app:menu="@menu/drawer_menu">
+        app:menu="@menu/drawer_menu"
+        app:itemTextAppearance="@style/drawer_text">
     </com.google.android.material.navigation.NavigationView>
 
 

@@ -34,7 +34,8 @@
                     android:layout_weight="10"
                     android:text="목   록"
                     android:textColor="@color/colorWhite"
-                    android:background="@color/colorWhatsNewDetailBtn"/>
+                    android:background="@color/colorWhatsNewDetailBtn"
+                    android:textSize="15dp"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -45,7 +46,8 @@
         android:id="@+id/navigationView"
         android:layout_gravity="start"
         app:headerLayout="@layout/header_layout"
-        app:menu="@menu/drawer_menu">
+        app:menu="@menu/drawer_menu"
+        app:itemTextAppearance="@style/drawer_text">
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -76,7 +76,6 @@ public class SirenOrderActivity extends AppCompatActivity {
 
     private void toolbarSetting(){
         toolbarText.setText("사이렌 오더");
-        toolbarText.setTextSize(20);
         setSupportActionBar(toolbar);
         menuIcon.setOnClickListener(new View.OnClickListener(){
             @Override

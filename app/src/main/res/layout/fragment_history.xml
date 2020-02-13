@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="구매내역이 없습니다" />
+        android:text="구매내역이 없습니다"
+        android:textSize="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,28 +21,32 @@
             android:layout_weight="45"
             android:layout_marginStart="10dp"
             android:gravity="center"
-            android:text="상품명" />
+            android:text="상품명"
+            android:textSize="17dp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="20"
             android:gravity="center"
-            android:text="가격" />
+            android:text="가격"
+            android:textSize="17dp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="10"
             android:gravity="center"
-            android:text="수량" />
+            android:text="수량"
+            android:textSize="17dp"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="25"
             android:gravity="center"
-            android:text="구매일" />
+            android:text="구매일"
+            android:textSize="17dp"/>
 
     </LinearLayout>
 

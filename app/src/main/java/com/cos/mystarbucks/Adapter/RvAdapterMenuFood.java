@@ -18,10 +18,12 @@ import com.cos.mystarbucks.model.MenuDTO;
 import com.cos.mystarbucks.util.Localhost;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RvAdapterMenuFood extends RecyclerView.Adapter<RvAdapterMenuFood.ViewHolder>{
+    private DecimalFormat formatter = new DecimalFormat("###,###");
     List<MenuDTO.Food> foods = new ArrayList<>();
     Activity actMenu;
 
@@ -66,7 +68,7 @@ public class RvAdapterMenuFood extends RecyclerView.Adapter<RvAdapterMenuFood.Vi
         }
         public void setItem(MenuDTO.Food foods){
             tvBeverageName.setText(foods.getName());
-            tvBeveragePrice.setText(foods.getPrice()+" 원");
+            tvBeveragePrice.setText(formatter.format(foods.getPrice())+" 원");
             Picasso.get()
                     .load(Localhost.URL + foods.getImage())
                     .into(ivBeverage);

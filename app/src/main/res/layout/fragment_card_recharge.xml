@@ -21,7 +21,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@color/colorWhite"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textSize="15dp"/>
 
     <TextView
         android:id="@+id/tv_point"
@@ -30,7 +31,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@color/colorWhite"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textSize="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,7 +54,8 @@
             android:layout_weight="10"
             android:background="@color/colorPurchaseBtn"
             android:text="충전하기"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="15dp"/>
 
         <Button
             android:id="@+id/btn_cardDelete"
@@ -64,7 +67,8 @@
             android:layout_weight="10"
             android:background="@color/colorPurchaseBtn"
             android:text="카드삭제"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:textSize="15dp"/>
 
     </LinearLayout>
 

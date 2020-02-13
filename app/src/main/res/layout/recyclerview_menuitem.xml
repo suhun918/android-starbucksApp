@@ -32,7 +32,8 @@
                 android:background="#00000000"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorBlack"
-                android:textSize="15sp"></TextView>
+                android:textSize="15dp"
+                android:paddingStart="10dp"/>
 
             <TextView
                 android:id="@+id/tv_menu_price"
@@ -41,7 +42,8 @@
                 android:layout_weight="10"
                 android:background="#00000000"
                 android:textColor="@color/colorBlack"
-                android:textSize="15sp"></TextView>
+                android:textSize="15dp"
+                android:paddingStart="10dp"/>
 
         </LinearLayout>
 

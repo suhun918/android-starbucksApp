@@ -23,6 +23,7 @@ import com.cos.mystarbucks.service.MyPageService;
 import com.cos.mystarbucks.util.Localhost;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RvAdapterMyMenu extends RecyclerView.Adapter<RvAdapterMyMenu.ViewHolder>{
+    private DecimalFormat formatter = new DecimalFormat("###,###");
     private List<MyPageDTO.MyMenu> myMenuList = new ArrayList<>();
     private int myCoffeeEA;
     private User user = User.getInstance();
@@ -79,7 +81,7 @@ public class RvAdapterMyMenu extends RecyclerView.Adapter<RvAdapterMyMenu.ViewHo
         public void setItem(MyPageDTO.MyMenu myMenu){
             btnDeleteMyMenu.setOnClickListener(this);
             tvMyMenuName.setText(myMenu.getName());
-            tvMyMenuPrice.setText(myMenu.getPrice()+" 원");
+            tvMyMenuPrice.setText(formatter.format(myMenu.getPrice())+" 원");
             Picasso.get()
                     .load(Localhost.URL + myMenu.getImage())
                     .into(ivMyMenu);

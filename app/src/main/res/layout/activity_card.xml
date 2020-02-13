@@ -28,7 +28,8 @@
                 android:background="#1f1f1f"
                 android:gravity="center"
                 android:text="안녕하세요. 스타벅스입니다."
-                android:textColor="@color/colorWelcome"/>
+                android:textColor="@color/colorWelcome"
+                android:textSize="16dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -48,7 +49,7 @@
                 android:background="@color/colorWhite"
                 android:gravity="center"
                 android:text="원하는 카드를 선택해 주세요"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -79,6 +80,7 @@
         android:id="@+id/navigationView"
         android:layout_gravity="start"
         app:headerLayout="@layout/header_layout"
-        app:menu="@menu/drawer_menu">
+        app:menu="@menu/drawer_menu"
+        app:itemTextAppearance="@style/drawer_text">
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

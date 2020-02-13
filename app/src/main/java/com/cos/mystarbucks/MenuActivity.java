@@ -70,7 +70,6 @@ public class MenuActivity extends AppCompatActivity {
 
     private void toolbarSetting(){
         toolbarText.setText("전체 메뉴");
-        toolbarText.setTextSize(20);
         setSupportActionBar(toolbar);
         menuIcon.setOnClickListener(new View.OnClickListener(){
             @Override

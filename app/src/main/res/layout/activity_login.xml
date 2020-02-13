@@ -42,7 +42,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:textColor="@color/colorBlack"
-            android:textSize="20sp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:textSize="15sp"
+            android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -72,6 +72,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:hint="아이디"
+            android:textSize="15dp"
             android:inputType="text"
             android:privateImeOptions="defaultInputmode=english"
             app:layout_constraintBottom_toTopOf="@+id/passwordInput"
@@ -89,6 +90,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="76dp"
             android:hint="비밀번호"
+            android:textSize="15dp"
             android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf="@+id/btn_layout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -114,6 +116,7 @@
                 android:layout_marginEnd="5dp"
                 android:gravity="center"
                 android:text="아이디 찾기"
+                android:textSize="14dp"
                 android:textColor="@color/colorBlack" />
 
             <View
@@ -134,6 +137,7 @@
                 android:layout_marginEnd="5dp"
                 android:gravity="center"
                 android:text="비밀번호 찾기"
+                android:textSize="14dp"
                 android:textColor="@color/colorBlack" />
 
             <View
@@ -153,6 +157,7 @@
                 android:layout_marginStart="-10dp"
                 android:gravity="center"
                 android:text="회원가입"
+                android:textSize="14dp"
                 android:textColor="@color/colorBlack" />
         </LinearLayout>
 
@@ -178,7 +183,7 @@
                 android:layout_weight="10"
                 android:background="@color/colorloginActiveButton"
                 android:text="로그인하기"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>
@@ -192,7 +197,8 @@
         android:id="@+id/navigationView"
         android:layout_gravity="start"
         app:headerLayout="@layout/header_layout"
-        app:menu="@menu/drawer_menu">
+        app:menu="@menu/drawer_menu"
+        app:itemTextAppearance="@style/drawer_text">
     </com.google.android.material.navigation.NavigationView>
 
 

@@ -65,7 +65,8 @@
                     android:gravity="center"
                     android:text="전체 메뉴"
                     android:layout_marginStart="-15dp"
-                    android:textColor="@color/colorBlack" />
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15dp"/>
             </LinearLayout>
 
 
@@ -99,7 +100,8 @@
                         android:gravity="center"
                         android:text="나만의 메뉴"
                         android:layout_marginStart="-10dp"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="15dp"/>
                 </LinearLayout>
 
 
@@ -133,7 +135,8 @@
                         android:gravity="center"
                         android:text="히스토리"
                         android:layout_marginStart="-15dp"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="15dp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -161,7 +164,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="10"
                     android:text="Beverage"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorBlack"
@@ -191,7 +194,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="10"
                     android:text="Food"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorBlack"
@@ -222,7 +225,8 @@
         android:id="@+id/navigationView"
         android:layout_gravity="start"
         app:headerLayout="@layout/header_layout"
-        app:menu="@menu/drawer_menu">
+        app:menu="@menu/drawer_menu"
+        app:itemTextAppearance="@style/drawer_text">
     </com.google.android.material.navigation.NavigationView>
 
 
